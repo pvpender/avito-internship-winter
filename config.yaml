@@ -1,0 +1,12 @@
+server:
+  port: :8080
+
+postgres:
+  host: db
+  port: 5432
+  database: shop
+  username: postgres
+  password: password
+
+auth:
+  secret: secret
