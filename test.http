@@ -1,0 +1,34 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=GoLand
+
+###
+
+### POST something
+POST localhost:8081/api/auth
+Content-Type: application/json
+
+{
+  "username": "Nic",
+  "Password": "12345"
+}
+
+### Get info
+GET localhost:8081/api/info
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozfQ.IWVW8fnG05AabIlmrKmNPVsISa_F8tXfbLN_y-deRGc
+Content-Type: application/json
+
+### Buy item
+GET localhost:8081/api/buy/umbrella
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozfQ.IWVW8fnG05AabIlmrKmNPVsISa_F8tXfbLN_y-deRGc
+Content-Type: application/json
+
+### Send Coin
+POST localhost:8081/api/sendCoin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozfQ.IWVW8fnG05AabIlmrKmNPVsISa_F8tXfbLN_y-deRGc
+Content-Type: application/json
+
+{
+  "toUser": "1",
+  "amount": 50
+}

@@ -1,6 +1,10 @@
 package main
 
 import (
+	"github.com/Masterminds/squirrel"
+	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
+	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
+	"github.com/go-chi/jwtauth/v5"
 	"github.com/pvpender/avito-shop/config"
 	"github.com/pvpender/avito-shop/database"
 	server "github.com/pvpender/avito-shop/internal/server"
@@ -25,9 +29,12 @@ func main() {
 		lgr.Error(err.Error())
 	}
 	defer pgDB.Close()
+	trManager := manager.Must(trmpgx.NewDefaultFactory(pgDB))
+	builder := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
+	tokenAuth := jwtauth.New("HS256", []byte(cfg.Auth.Secret), nil)
 
-	s := server.NewServer(cfg, pgDB, lgr)
-	if err := s.Run(); err != nil {
-		lgr.Error(err.Error())
+	s := server.NewServer(cfg, tokenAuth, pgDB, trManager, &builder, lgr)
+	if sErr := s.Run(); sErr != nil {
+		lgr.Error(sErr.Error())
 	}
 }

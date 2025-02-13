@@ -4,13 +4,11 @@ import (
 	"context"
 	"github.com/Masterminds/squirrel"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
-	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pvpender/avito-shop/internal/models"
-	"github.com/pvpender/avito-shop/internal/usecase/item"
-	"github.com/pvpender/avito-shop/internal/usecase/purchase"
-	"github.com/pvpender/avito-shop/internal/usecase/user"
 )
+
+const PurchaseTableName = "purchases_history"
 
 type PgPurchaseRepository struct {
 	db      *pgxpool.Pool
@@ -18,14 +16,19 @@ type PgPurchaseRepository struct {
 	builder *squirrel.StatementBuilderType
 }
 
-func (p *PgPurchaseRepository) CreatePurchase(ctx context.Context, username string, itemType string) (int32, error) {
-	query, args, err := p.builder.Insert("purchase_history").
-		Columns("username", "item_type").
-		Values(username, itemType).
+func NewPgPurchaseRepository(db *pgxpool.Pool, getter *trmpgx.CtxGetter, builder *squirrel.StatementBuilderType) *PgPurchaseRepository {
+	return &PgPurchaseRepository{db: db, getter: getter, builder: builder}
+}
+
+func (p *PgPurchaseRepository) CreatePurchase(ctx context.Context, userId uint32, itemId uint32) (int32, error) {
+	query, args, err := p.builder.Insert(PurchaseTableName).
+		Columns("user_id", "item_id").
+		Values(userId, itemId).
+		Suffix("RETURNING id").
 		ToSql()
 
 	if err != nil {
-		return 0, err
+		return -1, err
 	}
 
 	conn := p.getter.DefaultTrOrDB(ctx, p.db)
@@ -33,17 +36,19 @@ func (p *PgPurchaseRepository) CreatePurchase(ctx context.Context, username stri
 	var id int32
 	err = conn.QueryRow(ctx, query, args...).Scan(&id)
 	if err != nil {
-		return 0, err
+		return -1, err
 	}
 
 	return id, nil
 }
 
-func (p *PgPurchaseRepository) GetUserPurchases(ctx context.Context, username string) ([]*models.Item, error) {
-	query, args, err := p.builder.Select("item_type", "count(item_type) as count)").
-		From("purchase_history").
-		Where(squirrel.Eq{"username": username}).
-		GroupBy("item_id").
+func (p *PgPurchaseRepository) GetUserPurchases(ctx context.Context, userId uint32) ([]*models.Item, error) {
+	query, args, err := p.builder.Select("item_type", "count(item_type) as count").
+		From(PurchaseTableName).
+		LeftJoin("users on users.id = user_id").
+		LeftJoin("merch on merch.id = item_id").
+		Where(squirrel.Eq{"user_id": userId}).
+		GroupBy("item_type").
 		ToSql()
 
 	if err != nil {
@@ -69,41 +74,4 @@ func (p *PgPurchaseRepository) GetUserPurchases(ctx context.Context, username st
 	}
 
 	return items, nil
-}
-
-type PgPurchaseTransactionRepository struct {
-	trManager *manager.Manager
-	purchase.PurchaseRepository
-	user.UserRepository
-	item.ItemRepository
-}
-
-func (p *PgPurchaseTransactionRepository) CreatePurchaseTransmission(ctx context.Context, username string, itemType string) error {
-	purchasedItem, err := p.ItemRepository.GetItemByType(ctx, itemType)
-	if purchasedItem == nil {
-		return err
-	}
-
-	updatableUser, err := p.UserRepository.GetUserByUsername(ctx, username)
-	if err != nil {
-		return err
-	}
-
-	err = p.trManager.Do(ctx, func(ctx context.Context) error {
-		if _, errTr := p.PurchaseRepository.CreatePurchase(ctx, username, itemType); err != nil {
-			return errTr
-		}
-
-		if errTr := p.UserRepository.UpdateUserCoins(ctx, username, updatableUser.Coins-purchasedItem.Price); err != nil {
-			return errTr
-		}
-
-		return nil
-	})
-
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

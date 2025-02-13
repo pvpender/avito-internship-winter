@@ -8,14 +8,20 @@ import (
 	"github.com/pvpender/avito-shop/internal/models"
 )
 
+const UserTableName = "users"
+
 type PgUserRepository struct {
 	db      *pgxpool.Pool
 	getter  *trmpgx.CtxGetter
 	builder *squirrel.StatementBuilderType
 }
 
+func NewPgUserRepository(db *pgxpool.Pool, getter *trmpgx.CtxGetter, builder *squirrel.StatementBuilderType) *PgUserRepository {
+	return &PgUserRepository{db: db, getter: getter, builder: builder}
+}
+
 func (p *PgUserRepository) GetUserById(ctx context.Context, userId uint32) (*models.User, error) {
-	query, args, err := p.builder.Select("*").From("users").Where(squirrel.Eq{"id": userId}).ToSql()
+	query, args, err := p.builder.Select("*").From(UserTableName).Where(squirrel.Eq{"id": userId}).ToSql()
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +41,7 @@ func (p *PgUserRepository) GetUserById(ctx context.Context, userId uint32) (*mod
 
 func (p *PgUserRepository) GetUserByUsername(ctx context.Context, username string) (*models.User, error) {
 	query, args, err := p.builder.Select("*").
-		From("users").
+		From(UserTableName).
 		Where(squirrel.Eq{"username": username}).
 		ToSql()
 
@@ -56,33 +62,30 @@ func (p *PgUserRepository) GetUserByUsername(ctx context.Context, username strin
 	return user, nil
 }
 
-func (p *PgUserRepository) CreateUser(ctx context.Context, request models.AuthRequest) (*models.User, error) {
-	query, args, err := p.builder.Insert("user").
+func (p *PgUserRepository) CreateUser(ctx context.Context, request *models.AuthRequest) (int32, error) {
+	query, args, err := p.builder.Insert(UserTableName).
 		Columns("username", "password", "coins").
 		Values(request.Username, request.Password, 1000).
+		Suffix("RETURNING id").
 		ToSql()
-
+	
 	if err != nil {
-		return nil, err
+		return -1, err
 	}
 
 	conn := p.getter.DefaultTrOrDB(ctx, p.db)
-	user := &models.User{}
+	var userId int32
 
-	err = conn.QueryRow(ctx, query, args...).Scan(&user.UserId)
+	err = conn.QueryRow(ctx, query, args...).Scan(&userId)
 	if err != nil {
-		return nil, err
+		return -1, err
 	}
 
-	user.Username = request.Username
-	user.Password = request.Password
-	user.Coins = 1000
-
-	return user, nil
+	return userId, nil
 }
 
-func (p *PgUserRepository) UpdateUserCoins(ctx context.Context, username string, coins int32) error {
-	query, args, err := p.builder.Update("user").Where(squirrel.Eq{"username": username}).ToSql()
+func (p *PgUserRepository) UpdateUserCoins(ctx context.Context, userId uint32, coins int32) error {
+	query, args, err := p.builder.Update(UserTableName).Where(squirrel.Eq{"id": userId}).Set("coins", coins).ToSql()
 	if err != nil {
 		return err
 	}

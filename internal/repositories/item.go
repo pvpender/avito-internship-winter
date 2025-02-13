@@ -6,7 +6,10 @@ import (
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pvpender/avito-shop/internal/models"
+	"log/slog"
 )
+
+const ItemTableName = "merch"
 
 type PgItemRepository struct {
 	db      *pgxpool.Pool
@@ -14,11 +17,17 @@ type PgItemRepository struct {
 	builder *squirrel.StatementBuilderType
 }
 
+func NewPgItemRepository(db *pgxpool.Pool, getter *trmpgx.CtxGetter, builder *squirrel.StatementBuilderType) *PgItemRepository {
+	return &PgItemRepository{db: db, getter: getter, builder: builder}
+}
+
 func (p *PgItemRepository) GetItemByType(ctx context.Context, itemType string) (*models.Purchase, error) {
 	query, args, err := p.builder.Select("*").
-		From("merch").
+		From(ItemTableName).
 		Where(squirrel.Eq{"item_type": itemType}).
 		ToSql()
+
+	slog.Log(ctx, slog.LevelInfo, itemType)
 
 	if err != nil {
 		return nil, err

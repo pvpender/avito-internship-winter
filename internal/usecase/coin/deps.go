@@ -5,12 +5,14 @@ import (
 	"github.com/pvpender/avito-shop/internal/models"
 )
 
-type CoinRepository interface {
-	CreateTransmission(ctx context.Context, request models.SendCoinRequest) (*models.CoinOperation, error)
-	GetUserSendTransmission(ctx context.Context, username string) ([]*models.CoinOperation, error)
-	GetUserReceiveTransmission(ctx context.Context, username string) ([]*models.CoinOperation, error)
-}
+type TransmissionType string
 
-type TransmissionRepository interface {
-	SendCoin(ctx context.Context, username string, request models.SendCoinRequest) (*models.CoinOperation, error)
+const (
+	Received TransmissionType = "received"
+	Sent     TransmissionType = "sent"
+)
+
+type CoinRepository interface {
+	CreateTransmission(ctx context.Context, request *models.CoinOperationWithIds) (int32, error)
+	GetUserTransmissions(ctx context.Context, userId uint32, transmissionType TransmissionType) ([]*models.CoinOperationWithUsernames, error)
 }
