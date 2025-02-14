@@ -2,6 +2,8 @@ package server
 
 import (
 	"context"
+	middleware2 "github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"log/slog"
 	"net/http"
 	"os"
@@ -23,8 +25,9 @@ import (
 )
 
 const (
-	GrasefultShutdownTimeOut = 5
-	ServerTimeOut            = 3
+	GracefulShutdownTimeOut = 5
+	ServerTimeOut           = 3
+	ServerMaxAge            = 300
 )
 
 type Server struct {
@@ -71,7 +74,7 @@ func (server *Server) Run() error {
 
 	<-quit
 
-	ctx, shutdown := context.WithTimeout(context.Background(), GrasefultShutdownTimeOut*time.Second)
+	ctx, shutdown := context.WithTimeout(context.Background(), GracefulShutdownTimeOut*time.Second)
 	defer shutdown()
 
 	<-ctx.Done()
@@ -95,6 +98,22 @@ func (server *Server) PrepareHandlers(r *chi.Mux) error {
 	userHandler := handlers.NewUserHandler(userUS, server.jwtAuth, server.logger)
 	purchaseHandler := handlers.NewPurchaseHandler(purchaseUS, server.jwtAuth, server.logger)
 	coinHandler := handlers.NewCoinHandler(coinUS, server.jwtAuth, server.logger)
+
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           ServerMaxAge,
+	}))
+
+	r.Use(middleware2.Recoverer)
+	r.Use(middleware2.AllowContentType("application/json"))
+	r.Use(middleware2.RedirectSlashes)
+	r.Use(middleware2.RequestID)
+	r.Use(middleware2.CleanPath)
+	r.Use(middleware2.NoCache)
 
 	r.Group(func(r chi.Router) {
 		r.Post("/api/auth", authHandler.Auth)

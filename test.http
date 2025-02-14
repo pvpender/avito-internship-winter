@@ -25,10 +25,10 @@ Content-Type: application/json
 
 ### Send Coin
 POST localhost:8081/api/sendCoin
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.jYyRJbb0WImFoUUdcslQQfwnXTHJzne-6tsPd8Hrw0I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0fQ.nx7SmIYqAtbOD7Co5dT1QFDS-K90Fw8LPdZebt9KGUg
 Content-Type: application/json
 
 {
-  "toUser": "1",
-  "amount": 50
+  "toUser": "John",
+  "amount": 1500
 }

@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"github.com/pvpender/avito-shop/internal/errors"
 
 	"github.com/pvpender/avito-shop/internal/models"
 	"github.com/pvpender/avito-shop/internal/usecase/coin"
@@ -28,6 +29,10 @@ func NewUserUseCase(
 }
 
 func (u *UserUseCase) CreateUser(ctx context.Context, user *models.AuthRequest) error {
+	if user == nil {
+		return &errors.NilPointerError{}
+	}
+
 	_, err := u.UserRepository.CreateUser(ctx, user)
 	if err != nil {
 		return err

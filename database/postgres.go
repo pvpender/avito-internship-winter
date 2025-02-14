@@ -23,8 +23,8 @@ func NewPgPool(config *config.Config) (*pgxpool.Pool, error) {
 		return nil, err
 	}
 
-	if err := pool.Ping(context.Background()); err != nil {
-		return nil, err
+	if errDb := pool.Ping(context.Background()); errDb != nil {
+		return nil, errDb
 	}
 
 	return pool, nil

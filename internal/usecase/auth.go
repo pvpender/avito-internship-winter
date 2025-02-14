@@ -24,6 +24,10 @@ func NewAuthUseCase(jwtAuth *jwtauth.JWTAuth, userRepository user.UserRepository
 }
 
 func (auc *AuthUseCase) Authenticate(ctx context.Context, request *models.AuthRequest) (*models.AuthResponse, error) {
+	if request == nil {
+		return nil, &errInt.NilPointerError{}
+	}
+
 	authUser, err := auc.UserRepository.GetUserByUsername(ctx, request.Username)
 	if errors.Is(err, pgx.ErrNoRows) {
 		hashPass, uErr := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)

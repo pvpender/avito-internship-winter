@@ -33,8 +33,9 @@ func (handler *AuthHandler) Auth(w http.ResponseWriter, r *http.Request) {
 
 	response, err := handler.authUS.Authenticate(r.Context(), request)
 	if err != nil {
-		if errors.Is(err, errInt.InvalidCredentialsError{}) {
+		if errors.Is(err, &errInt.InvalidCredentialsError{}) {
 			respondWithError(w, handler.logger, http.StatusUnauthorized, "AuthHandler", err)
+			return
 		}
 
 		respondWithError(w, handler.logger, http.StatusInternalServerError, "AuthHandler", err)

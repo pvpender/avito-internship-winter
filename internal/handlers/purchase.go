@@ -38,7 +38,7 @@ func (ph *PurchaseHandler) Purchase(w http.ResponseWriter, r *http.Request) {
 
 	err = ph.purchaseUS.CreatePurchase(r.Context(), userId, itemType)
 	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, errInt.PurchaseError{}) {
+		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, &errInt.PurchaseError{}) {
 			respondWithError(w, ph.logger, http.StatusBadRequest, "PurchaseHandler", err)
 			return
 		}

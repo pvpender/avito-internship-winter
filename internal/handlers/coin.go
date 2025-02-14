@@ -42,7 +42,7 @@ func (ch *CoinHandler) SendCoin(w http.ResponseWriter, r *http.Request) {
 
 	err = ch.purchaseUS.SendCoin(r.Context(), userId, request)
 	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, errInt.InvalidAmountError{}) {
+		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, &errInt.InvalidAmountError{}) {
 			respondWithError(w, ch.logger, http.StatusBadRequest, "SendCoin", err)
 			return
 		}

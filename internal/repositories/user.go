@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"github.com/pvpender/avito-shop/internal/errors"
 
 	"github.com/Masterminds/squirrel"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
@@ -71,6 +72,10 @@ func (p *PgUserRepository) GetUserByUsername(ctx context.Context, username strin
 }
 
 func (p *PgUserRepository) CreateUser(ctx context.Context, request *models.AuthRequest) (int32, error) {
+	if request == nil {
+		return -1, errors.NilPointerError{}
+	}
+
 	query, args, err := p.builder.Insert(UserTableName).
 		Columns("username", "password", "coins").
 		Values(request.Username, request.Password, DefaultUserCoins).

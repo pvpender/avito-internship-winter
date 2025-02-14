@@ -29,6 +29,10 @@ func NewCoinUseCase(
 }
 
 func (c *CoinUseCase) SendCoin(ctx context.Context, userId uint32, request *models.SendCoinRequest) error {
+	if request == nil {
+		return &errors.NilPointerError{}
+	}
+
 	currentUser, err := c.UserRepository.GetUserById(ctx, userId)
 	if err != nil {
 		return err

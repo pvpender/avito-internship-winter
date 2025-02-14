@@ -17,7 +17,11 @@ type PgPurchaseRepository struct {
 	builder *squirrel.StatementBuilderType
 }
 
-func NewPgPurchaseRepository(db *pgxpool.Pool, getter *trmpgx.CtxGetter, builder *squirrel.StatementBuilderType) *PgPurchaseRepository {
+func NewPgPurchaseRepository(
+	db *pgxpool.Pool,
+	getter *trmpgx.CtxGetter,
+	builder *squirrel.StatementBuilderType,
+) *PgPurchaseRepository {
 	return &PgPurchaseRepository{db: db, getter: getter, builder: builder}
 }
 

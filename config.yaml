@@ -2,10 +2,10 @@ server:
   port: :8081
 
 postgres:
-  host: localhost
+  host: db
   port: 5432
-  database: postgres
-  username: user
+  database: shop
+  username: postgres
   password: password
 
 auth:

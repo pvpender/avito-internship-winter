@@ -12,6 +12,10 @@ import (
 )
 
 func respondWithError(w http.ResponseWriter, l *slog.Logger, statusCode int, handlerName string, err error) {
+	if err == nil {
+		err = &errors.ValidationError{}
+	}
+
 	l.Error(err.Error(), "handler", handlerName)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)

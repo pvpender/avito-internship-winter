@@ -23,14 +23,18 @@ func NewPgCoinRepository(
 	db *pgxpool.Pool,
 	getter *trmpgx.CtxGetter,
 	builder *squirrel.StatementBuilderType,
-	) *PgCoinRepository {
+) *PgCoinRepository {
 	return &PgCoinRepository{db: db, getter: getter, builder: builder}
 }
 
 func (p *PgCoinRepository) CreateTransmission(
 	ctx context.Context,
 	request *models.CoinOperationWithIds,
-	) (int32, error) {
+) (int32, error) {
+	if request == nil {
+		return -1, &errors.NilPointerError{}
+	}
+
 	query, args, err := p.builder.Insert(CoinTableName).
 		Columns("from_user", "to_user", "amount").
 		Values(request.FromUser, request.ToUser, request.Amount).
@@ -56,7 +60,7 @@ func (p *PgCoinRepository) GetUserTransmissions(
 	ctx context.Context,
 	userId uint32,
 	transmissionType coin.TransmissionType,
-	) ([]*models.CoinOperationWithUsernames, error) {
+) ([]*models.CoinOperationWithUsernames, error) {
 	var expr map[string]interface{}
 
 	switch transmissionType {
