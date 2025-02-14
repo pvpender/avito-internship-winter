@@ -16,7 +16,6 @@ linters:
     - durationcheck
     - err113
     - errname
-    - exhaustruct
     - exptostd
     - funlen
     - gci
@@ -40,7 +39,6 @@ linters:
     - unconvert
     - unparam
     - usestdlibvars
-    - varnamelen
     - whitespace
     - wsl
 
