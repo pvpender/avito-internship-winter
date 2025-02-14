@@ -29,7 +29,7 @@ func NewPgCoinRepository(
 
 func (p *PgCoinRepository) CreateTransmission(
 	ctx context.Context,
-	request *models.CoinOperationWithIds
+	request *models.CoinOperationWithIds,
 	) (int32, error) {
 	query, args, err := p.builder.Insert(CoinTableName).
 		Columns("from_user", "to_user", "amount").
