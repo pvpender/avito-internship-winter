@@ -2,11 +2,11 @@ package repositories
 
 import (
 	"context"
-	"github.com/pvpender/avito-shop/internal/errors"
 
 	"github.com/Masterminds/squirrel"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
 )
 

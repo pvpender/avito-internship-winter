@@ -18,8 +18,8 @@ type PgItemRepository struct {
 }
 
 func NewPgItemRepository(
-	db 		*pgxpool.Pool,
-	getter  *trmpgx.CtxGetter,
+	db *pgxpool.Pool,
+	getter *trmpgx.CtxGetter,
 	builder *squirrel.StatementBuilderType,
 ) *PgItemRepository {
 	return &PgItemRepository{db: db, getter: getter, builder: builder}

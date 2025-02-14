@@ -2,8 +2,6 @@ package server
 
 import (
 	"context"
-	middleware2 "github.com/go-chi/chi/v5/middleware"
-	"github.com/go-chi/cors"
 	"log/slog"
 	"net/http"
 	"os"
@@ -14,6 +12,8 @@ import (
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
 	"github.com/go-chi/chi/v5"
+	middleware2 "github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pvpender/avito-shop/config"
