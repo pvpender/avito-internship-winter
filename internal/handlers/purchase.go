@@ -18,7 +18,11 @@ type PurchaseHandler struct {
 	logger     *slog.Logger
 }
 
-func NewPurchaseHandler(purchaseUS *usecase.PurchaseUseCase, jwtAuth *jwtauth.JWTAuth, logger *slog.Logger) *PurchaseHandler {
+func NewPurchaseHandler(
+	purchaseUS *usecase.PurchaseUseCase,
+	jwtAuth *jwtauth.JWTAuth,
+	logger *slog.Logger,
+) *PurchaseHandler {
 	return &PurchaseHandler{purchaseUS: purchaseUS, jwtAuth: jwtAuth, logger: logger}
 }
 

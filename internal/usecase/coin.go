@@ -16,7 +16,11 @@ type CoinUseCase struct {
 	user.UserRepository
 }
 
-func NewCoinUseCase(trManager *manager.Manager, userRepository user.UserRepository, coinRepository coin.CoinRepository) *CoinUseCase {
+func NewCoinUseCase(
+	trManager *manager.Manager,
+	userRepository user.UserRepository,
+	coinRepository coin.CoinRepository,
+) *CoinUseCase {
 	return &CoinUseCase{
 		trManager:      trManager,
 		UserRepository: userRepository,

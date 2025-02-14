@@ -45,7 +45,12 @@ func respondWithJSON(w http.ResponseWriter, payload interface{}, logger *slog.Lo
 	_, _ = w.Write(response)
 }
 
-func getUserIdFromJwt(ctx context.Context, w http.ResponseWriter, logger *slog.Logger, handlerName string) (uint32, error) {
+func getUserIdFromJwt(
+	ctx context.Context,
+	w http.ResponseWriter,
+	logger *slog.Logger,
+	handlerName string,
+) (uint32, error) {
 	_, claims, err := jwtauth.FromContext(ctx)
 	if err != nil {
 		respondWithError(w, logger, http.StatusInternalServerError, handlerName, err)

@@ -36,7 +36,14 @@ type Server struct {
 	logger    *slog.Logger
 }
 
-func NewServer(config *config.Config, jwtAuth *jwtauth.JWTAuth, db *pgxpool.Pool, trManager *manager.Manager, builder *squirrel.StatementBuilderType, logger *slog.Logger) *Server {
+func NewServer(
+	config *config.Config,
+	jwtAuth *jwtauth.JWTAuth,
+	db *pgxpool.Pool,
+	trManager *manager.Manager,
+	builder *squirrel.StatementBuilderType,
+	logger *slog.Logger,
+) *Server {
 	return &Server{config, jwtAuth, db, trManager, builder, logger}
 }
 

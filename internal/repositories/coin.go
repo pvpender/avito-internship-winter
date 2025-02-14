@@ -19,11 +19,18 @@ type PgCoinRepository struct {
 	builder *squirrel.StatementBuilderType
 }
 
-func NewPgCoinRepository(db *pgxpool.Pool, getter *trmpgx.CtxGetter, builder *squirrel.StatementBuilderType) *PgCoinRepository {
+func NewPgCoinRepository(
+	db *pgxpool.Pool,
+	getter *trmpgx.CtxGetter,
+	builder *squirrel.StatementBuilderType,
+	) *PgCoinRepository {
 	return &PgCoinRepository{db: db, getter: getter, builder: builder}
 }
 
-func (p *PgCoinRepository) CreateTransmission(ctx context.Context, request *models.CoinOperationWithIds) (int32, error) {
+func (p *PgCoinRepository) CreateTransmission(
+	ctx context.Context,
+	request *models.CoinOperationWithIds
+	) (int32, error) {
 	query, args, err := p.builder.Insert(CoinTableName).
 		Columns("from_user", "to_user", "amount").
 		Values(request.FromUser, request.ToUser, request.Amount).
@@ -45,7 +52,11 @@ func (p *PgCoinRepository) CreateTransmission(ctx context.Context, request *mode
 	return id, nil
 }
 
-func (p *PgCoinRepository) GetUserTransmissions(ctx context.Context, userId uint32, transmissionType coin.TransmissionType) ([]*models.CoinOperationWithUsernames, error) {
+func (p *PgCoinRepository) GetUserTransmissions(
+	ctx context.Context,
+	userId uint32,
+	transmissionType coin.TransmissionType,
+	) ([]*models.CoinOperationWithUsernames, error) {
 	var expr map[string]interface{}
 
 	switch transmissionType {

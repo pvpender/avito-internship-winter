@@ -15,8 +15,16 @@ type UserUseCase struct {
 	coin.CoinRepository
 }
 
-func NewUserUseCase(userRepository user.UserRepository, purchaseRepository purchase.PurchaseRepository, coinRepository coin.CoinRepository) *UserUseCase {
-	return &UserUseCase{UserRepository: userRepository, PurchaseRepository: purchaseRepository, CoinRepository: coinRepository}
+func NewUserUseCase(
+	userRepository user.UserRepository,
+	purchaseRepository purchase.PurchaseRepository,
+	coinRepository coin.CoinRepository,
+) *UserUseCase {
+	return &UserUseCase{
+		UserRepository:     userRepository,
+		PurchaseRepository: purchaseRepository,
+		CoinRepository:     coinRepository,
+	}
 }
 
 func (u *UserUseCase) CreateUser(ctx context.Context, user *models.AuthRequest) error {

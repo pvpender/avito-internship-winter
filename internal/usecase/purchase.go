@@ -17,8 +17,18 @@ type PurchaseUseCase struct {
 	item.ItemRepository
 }
 
-func NewPurchaseUseCase(trManager *manager.Manager, purchaseRepository purchase.PurchaseRepository, userRepository user.UserRepository, itemRepository item.ItemRepository) *PurchaseUseCase {
-	return &PurchaseUseCase{trManager: trManager, PurchaseRepository: purchaseRepository, UserRepository: userRepository, ItemRepository: itemRepository}
+func NewPurchaseUseCase(
+	trManager *manager.Manager,
+	purchaseRepository purchase.PurchaseRepository,
+	userRepository user.UserRepository,
+	itemRepository item.ItemRepository,
+) *PurchaseUseCase {
+	return &PurchaseUseCase{
+		trManager:          trManager,
+		PurchaseRepository: purchaseRepository,
+		UserRepository:     userRepository,
+		ItemRepository:     itemRepository,
+	}
 }
 
 func (p PurchaseUseCase) CreatePurchase(ctx context.Context, userId uint32, itemType string) error {

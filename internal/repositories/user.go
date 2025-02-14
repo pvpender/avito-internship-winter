@@ -20,7 +20,11 @@ type PgUserRepository struct {
 	builder *squirrel.StatementBuilderType
 }
 
-func NewPgUserRepository(db *pgxpool.Pool, getter *trmpgx.CtxGetter, builder *squirrel.StatementBuilderType) *PgUserRepository {
+func NewPgUserRepository(
+	db *pgxpool.Pool,
+	getter *trmpgx.CtxGetter,
+	builder *squirrel.StatementBuilderType,
+) *PgUserRepository {
 	return &PgUserRepository{db: db, getter: getter, builder: builder}
 }
 
@@ -90,7 +94,12 @@ func (p *PgUserRepository) CreateUser(ctx context.Context, request *models.AuthR
 }
 
 func (p *PgUserRepository) UpdateUserCoins(ctx context.Context, userId uint32, coins int32) error {
-	query, args, err := p.builder.Update(UserTableName).Where(squirrel.Eq{"id": userId}).Set("coins", coins).ToSql()
+	query, args, err := p.builder.
+		Update(UserTableName).
+		Where(squirrel.Eq{"id": userId}).
+		Set("coins", coins).
+		ToSql()
+
 	if err != nil {
 		return err
 	}
