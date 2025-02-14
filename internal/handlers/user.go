@@ -1,20 +1,20 @@
 package handlers
 
 import (
+	"github.com/pvpender/avito-shop/internal/usecase/user"
 	"log/slog"
 	"net/http"
 
 	"github.com/go-chi/jwtauth/v5"
-	"github.com/pvpender/avito-shop/internal/usecase"
 )
 
 type UserHandler struct {
-	userUS  *usecase.UserUseCase
+	userUS  user.UserUseCase
 	jwtAuth *jwtauth.JWTAuth
 	logger  *slog.Logger
 }
 
-func NewUserHandler(us *usecase.UserUseCase, jwtAuth *jwtauth.JWTAuth, l *slog.Logger) *UserHandler {
+func NewUserHandler(us user.UserUseCase, jwtAuth *jwtauth.JWTAuth, l *slog.Logger) *UserHandler {
 	return &UserHandler{userUS: us, jwtAuth: jwtAuth, logger: l}
 }
 

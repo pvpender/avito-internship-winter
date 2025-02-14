@@ -3,20 +3,20 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
+	"github.com/pvpender/avito-shop/internal/usecase/auth"
 	"log/slog"
 	"net/http"
 
 	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
-	"github.com/pvpender/avito-shop/internal/usecase"
 )
 
 type AuthHandler struct {
-	authUS *usecase.AuthUseCase
+	authUS auth.AuthUseCase
 	logger *slog.Logger
 }
 
-func NewAuthHandler(authUS *usecase.AuthUseCase, logger *slog.Logger) *AuthHandler {
+func NewAuthHandler(authUS auth.AuthUseCase, logger *slog.Logger) *AuthHandler {
 	return &AuthHandler{authUS: authUS, logger: logger}
 }
 

@@ -11,6 +11,7 @@ require (
 	github.com/go-chi/jwtauth/v5 v5.3.2
 	github.com/jackc/pgx/v5 v5.7.2
 	github.com/spf13/viper v1.19.0
+	go.uber.org/mock v0.5.0
 	golang.org/x/crypto v0.31.0
 )
 
@@ -40,6 +41,7 @@ require (
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/stretchr/testify v1.10.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect

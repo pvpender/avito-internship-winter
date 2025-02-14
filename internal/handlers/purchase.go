@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"errors"
+	"github.com/pvpender/avito-shop/internal/usecase/purchase"
 	"log/slog"
 	"net/http"
 
@@ -9,17 +10,16 @@ import (
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
 	errInt "github.com/pvpender/avito-shop/internal/errors"
-	"github.com/pvpender/avito-shop/internal/usecase"
 )
 
 type PurchaseHandler struct {
-	purchaseUS *usecase.PurchaseUseCase
+	purchaseUS purchase.PurchaseUseCase
 	jwtAuth    *jwtauth.JWTAuth
 	logger     *slog.Logger
 }
 
 func NewPurchaseHandler(
-	purchaseUS *usecase.PurchaseUseCase,
+	purchaseUS purchase.PurchaseUseCase,
 	jwtAuth *jwtauth.JWTAuth,
 	logger *slog.Logger,
 ) *PurchaseHandler {

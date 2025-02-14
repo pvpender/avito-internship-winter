@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
+	"github.com/pvpender/avito-shop/internal/usecase/coin"
 	"log/slog"
 	"net/http"
 
@@ -10,16 +11,15 @@ import (
 	"github.com/jackc/pgx/v5"
 	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
-	"github.com/pvpender/avito-shop/internal/usecase"
 )
 
 type CoinHandler struct {
-	purchaseUS *usecase.CoinUseCase
+	purchaseUS coin.CoinUseCase
 	jwtAuth    *jwtauth.JWTAuth
 	logger     *slog.Logger
 }
 
-func NewCoinHandler(purchaseUS *usecase.CoinUseCase, jwtAuth *jwtauth.JWTAuth, logger *slog.Logger) *CoinHandler {
+func NewCoinHandler(purchaseUS coin.CoinUseCase, jwtAuth *jwtauth.JWTAuth, logger *slog.Logger) *CoinHandler {
 	return &CoinHandler{purchaseUS: purchaseUS, jwtAuth: jwtAuth, logger: logger}
 }
 
