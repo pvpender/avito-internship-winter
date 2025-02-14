@@ -3,13 +3,14 @@ package usecase
 import (
 	"context"
 	"errors"
+	"log/slog"
+
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
 	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
 	"github.com/pvpender/avito-shop/internal/usecase/user"
 	"golang.org/x/crypto/bcrypt"
-	"log/slog"
 )
 
 type AuthUseCase struct {
@@ -31,6 +32,7 @@ func (auc *AuthUseCase) Authenticate(ctx context.Context, request *models.AuthRe
 		}
 
 		request.Password = string(hashPass)
+
 		id, uErr := auc.CreateUser(ctx, request)
 		if uErr != nil {
 			return nil, uErr
@@ -57,7 +59,7 @@ func (auc *AuthUseCase) Authenticate(ctx context.Context, request *models.AuthRe
 		return &models.AuthResponse{Token: tokenAuth}, nil
 	}
 
-	return nil, &errInt.InvalidCredentials{}
+	return nil, &errInt.InvalidCredentialsError{}
 }
 
 func (auc *AuthUseCase) CheckPasswordHash(password, hash string) bool {

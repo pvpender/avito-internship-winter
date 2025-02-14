@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+
 	"github.com/Masterminds/squirrel"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -34,6 +35,7 @@ func (p *PgPurchaseRepository) CreatePurchase(ctx context.Context, userId uint32
 	conn := p.getter.DefaultTrOrDB(ctx, p.db)
 
 	var id int32
+
 	err = conn.QueryRow(ctx, query, args...).Scan(&id)
 	if err != nil {
 		return -1, err
@@ -56,6 +58,7 @@ func (p *PgPurchaseRepository) GetUserPurchases(ctx context.Context, userId uint
 	}
 
 	conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
 	rows, err := conn.Query(ctx, query, args...)
 	if err != nil {
 		return nil, err
@@ -64,12 +67,15 @@ func (p *PgPurchaseRepository) GetUserPurchases(ctx context.Context, userId uint
 	defer rows.Close()
 
 	items := make([]*models.Item, 0)
+
 	for rows.Next() {
 		newItem := &models.Item{}
+
 		err = rows.Scan(&newItem.ItemType, &newItem.Quantity)
 		if err != nil {
 			return nil, err
 		}
+
 		items = append(items, newItem)
 	}
 

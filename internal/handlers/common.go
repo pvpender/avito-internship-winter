@@ -3,18 +3,21 @@ package handlers
 import (
 	"context"
 	"encoding/json"
+	"log/slog"
+	"net/http"
+
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
-	"log/slog"
-	"net/http"
 )
 
 func respondWithError(w http.ResponseWriter, l *slog.Logger, statusCode int, handlerName string, err error) {
 	l.Error(err.Error(), "handler", handlerName)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
-	errMessage := models.ErrorResponse{}
+
+	errMessage := &models.ErrorResponse{}
+
 	switch statusCode {
 	case http.StatusBadRequest:
 		errMessage.Errors = "bad request"
@@ -24,7 +27,6 @@ func respondWithError(w http.ResponseWriter, l *slog.Logger, statusCode int, han
 		errMessage.Errors = "forbidden"
 	default:
 		errMessage.Errors = "internal server error"
-
 	}
 
 	response, _ := json.Marshal(errMessage)
@@ -53,8 +55,8 @@ func getUserIdFromJwt(ctx context.Context, w http.ResponseWriter, logger *slog.L
 	userId, ok := claims["user_id"].(float64)
 
 	if !ok {
-		respondWithError(w, logger, http.StatusInternalServerError, handlerName, &errors.InvalidJWT{})
-		return 0, &errors.InvalidJWT{}
+		respondWithError(w, logger, http.StatusInternalServerError, handlerName, &errors.InvalidJWTError{})
+		return 0, &errors.InvalidJWTError{}
 	}
 
 	return uint32(userId), nil

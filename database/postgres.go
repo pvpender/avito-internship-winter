@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"fmt"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pvpender/avito-shop/config"
 )
@@ -16,6 +17,7 @@ func NewPgPool(config *config.Config) (*pgxpool.Pool, error) {
 		config.Postgres.Port,
 		config.Postgres.Database,
 	)
+
 	pool, err := pgxpool.New(context.Background(), connStr)
 	if err != nil {
 		return nil, err

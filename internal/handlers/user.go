@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"github.com/go-chi/jwtauth/v5"
-	"github.com/pvpender/avito-shop/internal/usecase"
 	"log/slog"
 	"net/http"
+
+	"github.com/go-chi/jwtauth/v5"
+	"github.com/pvpender/avito-shop/internal/usecase"
 )
 
 type UserHandler struct {
@@ -19,6 +20,7 @@ func NewUserHandler(us *usecase.UserUseCase, jwtAuth *jwtauth.JWTAuth, l *slog.L
 
 func (uh *UserHandler) Info(w http.ResponseWriter, r *http.Request) {
 	uh.logger.Info("Info called")
+
 	userId, err := getUserIdFromJwt(r.Context(), w, uh.logger, "UserHandler")
 	if err != nil {
 		return

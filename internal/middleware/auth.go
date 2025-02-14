@@ -1,8 +1,9 @@
 package middleware
 
 import (
-	"github.com/go-chi/jwtauth/v5"
 	"net/http"
+
+	"github.com/go-chi/jwtauth/v5"
 )
 
 func Authenticator(ja *jwtauth.JWTAuth) func(http.Handler) http.Handler {
@@ -22,11 +23,13 @@ func Authenticator(ja *jwtauth.JWTAuth) func(http.Handler) http.Handler {
 				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusUnauthorized)
 				_, _ = w.Write([]byte(`{"errors": "unauthorized"}`))
+
 				return
 			}
 
 			next.ServeHTTP(w, r)
 		}
+
 		return http.HandlerFunc(hfn)
 	}
 }

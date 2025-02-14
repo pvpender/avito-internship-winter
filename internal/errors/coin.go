@@ -1,15 +1,15 @@
 package errors
 
-type InvalidAmount struct {
+type InvalidAmountError struct {
 }
 
-func (e InvalidAmount) Error() string {
+func (e InvalidAmountError) Error() string {
 	return "amount must be positive"
 }
 
-type InvalidCoinOperation struct {
+type InvalidCoinOperationError struct {
 }
 
-func (e InvalidCoinOperation) Error() string {
+func (e InvalidCoinOperationError) Error() string {
 	return "coin operation cannot be processed, check user and amount"
 }

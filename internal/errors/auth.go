@@ -1,15 +1,22 @@
 package errors
 
-type InvalidCredentials struct {
+type InvalidCredentialsError struct {
 }
 
-func (e InvalidCredentials) Error() string {
+func (e InvalidCredentialsError) Error() string {
 	return "invalid credentials"
 }
 
-type InvalidJWT struct {
+type InvalidJWTError struct {
 }
 
-func (e InvalidJWT) Error() string {
+func (e InvalidJWTError) Error() string {
 	return "invalid jwt"
+}
+
+type InvalidTransmissionError struct {
+}
+
+func (e InvalidTransmissionError) Error() string {
+	return "invalid transmission type"
 }

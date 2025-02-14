@@ -32,6 +32,7 @@ func LoadConfig(filename string, configType string) (*Config, error) {
 	v.SetConfigType(configType)
 	v.AddConfigPath(".")
 	v.AutomaticEnv()
+
 	if err := v.ReadInConfig(); err != nil {
 		return nil, err
 	}

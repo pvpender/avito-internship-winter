@@ -2,6 +2,7 @@ package coin
 
 import (
 	"context"
+
 	"github.com/pvpender/avito-shop/internal/models"
 )
 

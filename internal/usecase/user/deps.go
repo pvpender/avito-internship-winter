@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+
 	"github.com/pvpender/avito-shop/internal/models"
 )
 

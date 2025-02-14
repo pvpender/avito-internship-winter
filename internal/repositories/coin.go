@@ -2,10 +2,11 @@ package repositories
 
 import (
 	"context"
-	"fmt"
+
 	"github.com/Masterminds/squirrel"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
 	"github.com/pvpender/avito-shop/internal/usecase/coin"
 )
@@ -33,7 +34,9 @@ func (p *PgCoinRepository) CreateTransmission(ctx context.Context, request *mode
 	}
 
 	conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
 	var id int32
+
 	err = conn.QueryRow(ctx, query, args...).Scan(&id)
 	if err != nil {
 		return -1, err
@@ -44,6 +47,7 @@ func (p *PgCoinRepository) CreateTransmission(ctx context.Context, request *mode
 
 func (p *PgCoinRepository) GetUserTransmissions(ctx context.Context, userId uint32, transmissionType coin.TransmissionType) ([]*models.CoinOperationWithUsernames, error) {
 	var expr map[string]interface{}
+
 	switch transmissionType {
 	case coin.Sent:
 		expr = squirrel.Eq{"from_user": userId}
@@ -52,7 +56,7 @@ func (p *PgCoinRepository) GetUserTransmissions(ctx context.Context, userId uint
 		expr = squirrel.Eq{"to_user": userId}
 
 	default:
-		return nil, fmt.Errorf("invalid transmission type")
+		return nil, &errors.InvalidTransmissionError{}
 	}
 
 	query, args, err := p.builder.Select("u.username", "u2.username", "amount").
@@ -66,15 +70,19 @@ func (p *PgCoinRepository) GetUserTransmissions(ctx context.Context, userId uint
 	}
 
 	conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
 	rows, err := conn.Query(ctx, query, args...)
 	if err != nil {
 		return nil, err
 	}
 
 	defer rows.Close()
+
 	coinOperations := make([]*models.CoinOperationWithUsernames, 0)
+
 	for rows.Next() {
 		coinOperation := &models.CoinOperationWithUsernames{}
+
 		err = rows.Scan(&coinOperation.FromUser, &coinOperation.ToUser, &coinOperation.Amount)
 		if err != nil {
 			return nil, err

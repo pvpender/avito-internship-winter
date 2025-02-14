@@ -2,13 +2,14 @@ package handlers
 
 import (
 	"errors"
+	"log/slog"
+	"net/http"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
 	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/usecase"
-	"log/slog"
-	"net/http"
 )
 
 type PurchaseHandler struct {
@@ -23,20 +24,23 @@ func NewPurchaseHandler(purchaseUS *usecase.PurchaseUseCase, jwtAuth *jwtauth.JW
 
 func (ph *PurchaseHandler) Purchase(w http.ResponseWriter, r *http.Request) {
 	ph.logger.Info("Purchase called")
+
 	userId, err := getUserIdFromJwt(r.Context(), w, ph.logger, "PurchaseHandler")
 	if err != nil {
 		return
 	}
 
 	itemType := chi.URLParam(r, "item")
+
 	err = ph.purchaseUS.CreatePurchase(r.Context(), userId, itemType)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, errInt.PurchaseError{}) {
-			respondWithError(w, ph.logger, 400, "PurchaseHandler", err)
+			respondWithError(w, ph.logger, http.StatusBadRequest, "PurchaseHandler", err)
 			return
 		}
 
-		respondWithError(w, ph.logger, 500, "PurchaseHandler", err)
+		respondWithError(w, ph.logger, http.StatusInternalServerError, "PurchaseHandler", err)
+
 		return
 	}
 

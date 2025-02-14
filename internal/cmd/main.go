@@ -1,6 +1,9 @@
 package main
 
 import (
+	"log/slog"
+	"os"
+
 	"github.com/Masterminds/squirrel"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
@@ -8,8 +11,6 @@ import (
 	"github.com/pvpender/avito-shop/config"
 	"github.com/pvpender/avito-shop/database"
 	server "github.com/pvpender/avito-shop/internal/server"
-	"log/slog"
-	"os"
 )
 
 const (
@@ -20,6 +21,7 @@ const (
 func main() {
 	lgr := slog.New(slog.NewJSONHandler(os.Stderr, nil))
 	cfg, err := config.LoadConfig(configFile, configType)
+
 	if err != nil {
 		lgr.Error(err.Error())
 	}
@@ -28,6 +30,7 @@ func main() {
 	if err != nil {
 		lgr.Error(err.Error())
 	}
+
 	defer pgDB.Close()
 	trManager := manager.Must(trmpgx.NewDefaultFactory(pgDB))
 	builder := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)

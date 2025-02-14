@@ -2,13 +2,17 @@ package repositories
 
 import (
 	"context"
+
 	"github.com/Masterminds/squirrel"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pvpender/avito-shop/internal/models"
 )
 
-const UserTableName = "users"
+const (
+	UserTableName    = "users"
+	DefaultUserCoins = 1000
+)
 
 type PgUserRepository struct {
 	db      *pgxpool.Pool
@@ -65,15 +69,16 @@ func (p *PgUserRepository) GetUserByUsername(ctx context.Context, username strin
 func (p *PgUserRepository) CreateUser(ctx context.Context, request *models.AuthRequest) (int32, error) {
 	query, args, err := p.builder.Insert(UserTableName).
 		Columns("username", "password", "coins").
-		Values(request.Username, request.Password, 1000).
+		Values(request.Username, request.Password, DefaultUserCoins).
 		Suffix("RETURNING id").
 		ToSql()
-	
+
 	if err != nil {
 		return -1, err
 	}
 
 	conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
 	var userId int32
 
 	err = conn.QueryRow(ctx, query, args...).Scan(&userId)
@@ -91,6 +96,7 @@ func (p *PgUserRepository) UpdateUserCoins(ctx context.Context, userId uint32, c
 	}
 
 	conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
 	_, err = conn.Exec(ctx, query, args...)
 	if err != nil {
 		return err

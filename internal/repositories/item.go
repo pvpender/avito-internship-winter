@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+
 	"github.com/Masterminds/squirrel"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -31,6 +32,7 @@ func (p *PgItemRepository) GetItemByType(ctx context.Context, itemType string) (
 	}
 
 	conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
 	var item models.Purchase
 	err = conn.QueryRow(ctx, query, args...).Scan(&item.ItemId, &item.ItemType, &item.Price)
 

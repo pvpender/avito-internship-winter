@@ -2,6 +2,12 @@ package server
 
 import (
 	"context"
+	"log/slog"
+	"net/http"
+	"os"
+	"os/signal"
+	"time"
+
 	"github.com/Masterminds/squirrel"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
@@ -14,11 +20,11 @@ import (
 	"github.com/pvpender/avito-shop/internal/middleware"
 	"github.com/pvpender/avito-shop/internal/repositories"
 	"github.com/pvpender/avito-shop/internal/usecase"
-	"log/slog"
-	"net/http"
-	"os"
-	"os/signal"
-	"time"
+)
+
+const (
+	GrasefultShutdownTimeOut = 5
+	ServerTimeOut            = 3
 )
 
 type Server struct {
@@ -42,7 +48,13 @@ func (server *Server) Run() error {
 		server.logger.With(
 			slog.String("port", server.config.Server.Port),
 		).Info("Server running on port")
-		if err := http.ListenAndServe(server.config.Server.Port, r); err != nil {
+
+		serv := &http.Server{
+			Addr:              server.config.Server.Port,
+			Handler:           r,
+			ReadHeaderTimeout: ServerTimeOut * time.Second,
+		}
+		if err := serv.ListenAndServe(); err != nil {
 			server.logger.Error(err.Error())
 		}
 	}()
@@ -52,13 +64,11 @@ func (server *Server) Run() error {
 
 	<-quit
 
-	ctx, shutdown := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, shutdown := context.WithTimeout(context.Background(), GrasefultShutdownTimeOut*time.Second)
 	defer shutdown()
 
-	select {
-	case <-ctx.Done():
-		server.logger.Warn("Server shutting down")
-	}
+	<-ctx.Done()
+	server.logger.Warn("Server shutting down")
 
 	return &errors.ShutdownError{}
 }

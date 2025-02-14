@@ -31,7 +31,7 @@ type CoinHistory struct {
 
 func CreateCoinOperationWithIds(fromUser uint32, toUser uint32, amount int32) (*CoinOperationWithIds, error) {
 	if (fromUser == toUser) || amount <= 0 {
-		return nil, &errors.InvalidCoinOperation{}
+		return nil, &errors.InvalidCoinOperationError{}
 	}
 
 	return &CoinOperationWithIds{fromUser, toUser, amount}, nil

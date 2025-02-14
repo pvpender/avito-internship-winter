@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+
 	"github.com/pvpender/avito-shop/internal/models"
 	"github.com/pvpender/avito-shop/internal/usecase/coin"
 	"github.com/pvpender/avito-shop/internal/usecase/purchase"
