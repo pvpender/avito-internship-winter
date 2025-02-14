@@ -1,0 +1,54 @@
+linters:
+  enable:
+    - errcheck
+    - goimports
+    - govet
+    - staticcheck
+    - ineffassign
+    - unused
+    - asciicheck
+    - bidichk
+    - canonicalheader
+    - containedctx
+    - copyloopvar
+    - decorder
+    - dupword
+    - durationcheck
+    - err113
+    - errname
+    - exhaustruct
+    - exptostd
+    - funlen
+    - gci
+    - gochecknoglobals
+    - gocognit
+    - gocritic
+    - goconst
+    - gofmt
+    - goheader
+    - gosec
+    - importas
+    - makezero
+    - mnd
+    - nestif
+    - nilnil
+    - noctx
+    - perfsprint
+    - reassign
+    - sloglint
+    - tagalign
+    - unconvert
+    - unparam
+    - usestdlibvars
+    - varnamelen
+    - whitespace
+    - wsl
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+run:
+  timeout: 5m
+  modules-download-mode: readonly
