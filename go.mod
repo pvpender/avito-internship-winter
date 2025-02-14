@@ -1,6 +1,6 @@
 module github.com/pvpender/avito-shop
 
-go 1.23rc1
+go 1.22
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
