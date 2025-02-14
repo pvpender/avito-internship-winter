@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"errors"
-	"github.com/pvpender/avito-shop/internal/usecase/purchase"
 	"log/slog"
 	"net/http"
 
@@ -10,6 +9,7 @@ import (
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
 	errInt "github.com/pvpender/avito-shop/internal/errors"
+	"github.com/pvpender/avito-shop/internal/usecase/purchase"
 )
 
 type PurchaseHandler struct {

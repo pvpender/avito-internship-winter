@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"github.com/pvpender/avito-shop/internal/usecase/user"
 	"log/slog"
 	"net/http"
 
 	"github.com/go-chi/jwtauth/v5"
+	"github.com/pvpender/avito-shop/internal/usecase/user"
 )
 
 type UserHandler struct {

@@ -3,12 +3,12 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
-	"github.com/pvpender/avito-shop/internal/usecase/auth"
 	"log/slog"
 	"net/http"
 
 	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
+	"github.com/pvpender/avito-shop/internal/usecase/auth"
 )
 
 type AuthHandler struct {

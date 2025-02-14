@@ -3,7 +3,6 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
-	"github.com/pvpender/avito-shop/internal/usecase/coin"
 	"log/slog"
 	"net/http"
 
@@ -11,6 +10,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
+	"github.com/pvpender/avito-shop/internal/usecase/coin"
 )
 
 type CoinHandler struct {
