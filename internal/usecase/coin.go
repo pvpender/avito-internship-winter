@@ -2,8 +2,8 @@ package usecase
 
 import (
 	"context"
-	"errors"
 	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
+	"github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
 	"github.com/pvpender/avito-shop/internal/usecase/coin"
 	"github.com/pvpender/avito-shop/internal/usecase/user"
@@ -36,7 +36,7 @@ func (c *CoinUseCase) SendCoin(ctx context.Context, userId uint32, request *mode
 
 	var newAmount int32 = currentUser.Coins - request.Amount
 	if newAmount < 0 {
-		return errors.New("invalid amount")
+		return &errors.InvalidAmount{}
 	}
 
 	transmission, err := models.CreateCoinOperationWithIds(currentUser.UserId, receiver.UserId, request.Amount)

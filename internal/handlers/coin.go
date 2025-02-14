@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
+	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
 	"github.com/pvpender/avito-shop/internal/usecase"
 	"log/slog"
@@ -38,7 +39,7 @@ func (ch *CoinHandler) SendCoin(w http.ResponseWriter, r *http.Request) {
 
 	err = ch.purchaseUS.SendCoin(r.Context(), userId, request)
 	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
+		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, errInt.InvalidAmount{}) {
 			respondWithError(w, ch.logger, http.StatusBadRequest, "SendCoin", err)
 			return
 		}

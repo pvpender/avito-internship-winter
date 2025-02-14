@@ -2,8 +2,8 @@ package usecase
 
 import (
 	"context"
-	"errors"
 	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
+	"github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/usecase/item"
 	"github.com/pvpender/avito-shop/internal/usecase/purchase"
 	"github.com/pvpender/avito-shop/internal/usecase/user"
@@ -33,7 +33,7 @@ func (p PurchaseUseCase) CreatePurchase(ctx context.Context, userId uint32, item
 
 	newAmount := updatableUser.Coins - purchasedItem.Price
 	if newAmount < 0 {
-		return errors.New("cannot create purchase, amount is negative")
+		return &errors.PurchaseError{Msg: "Not enough coins"}
 	}
 
 	err = p.trManager.Do(ctx, func(ctx context.Context) error {

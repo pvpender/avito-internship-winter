@@ -1,6 +1,6 @@
 package models
 
-import "errors"
+import "github.com/pvpender/avito-shop/internal/errors"
 
 type SendCoinRequest struct {
 	ToUser string `json:"toUser"`
@@ -29,25 +29,9 @@ type CoinHistory struct {
 	Sent     []*SendCoinRequest `json:"sent"`
 }
 
-func CreateSendCoinRequest(toUser string, amount int32) (*SendCoinRequest, error) {
-	if toUser == "" || amount <= 0 {
-		return nil, errors.New("toUser and amount must be positive")
-	}
-
-	return &SendCoinRequest{toUser, amount}, nil
-}
-
-func CreateReceivedCoin(fromUser string, amount int32) (*ReceivedCoin, error) {
-	if fromUser == "" || amount <= 0 {
-		return nil, errors.New("fromUser and amount must be positive")
-	}
-
-	return &ReceivedCoin{fromUser, amount}, nil
-}
-
 func CreateCoinOperationWithIds(fromUser uint32, toUser uint32, amount int32) (*CoinOperationWithIds, error) {
 	if (fromUser == toUser) || amount <= 0 {
-		return nil, errors.New("fromUser and toUser and amount must be positive")
+		return nil, &errors.InvalidCoinOperation{}
 	}
 
 	return &CoinOperationWithIds{fromUser, toUser, amount}, nil

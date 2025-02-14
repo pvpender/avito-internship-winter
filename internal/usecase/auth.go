@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
+	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
 	"github.com/pvpender/avito-shop/internal/usecase/user"
 	"golang.org/x/crypto/bcrypt"
@@ -56,7 +57,7 @@ func (auc *AuthUseCase) Authenticate(ctx context.Context, request *models.AuthRe
 		return &models.AuthResponse{Token: tokenAuth}, nil
 	}
 
-	return nil, errors.New("invalid password")
+	return nil, &errInt.InvalidCredentials{}
 }
 
 func (auc *AuthUseCase) CheckPasswordHash(password, hash string) bool {

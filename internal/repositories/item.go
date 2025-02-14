@@ -6,7 +6,6 @@ import (
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pvpender/avito-shop/internal/models"
-	"log/slog"
 )
 
 const ItemTableName = "merch"
@@ -26,8 +25,6 @@ func (p *PgItemRepository) GetItemByType(ctx context.Context, itemType string) (
 		From(ItemTableName).
 		Where(squirrel.Eq{"item_type": itemType}).
 		ToSql()
-
-	slog.Log(ctx, slog.LevelInfo, itemType)
 
 	if err != nil {
 		return nil, err

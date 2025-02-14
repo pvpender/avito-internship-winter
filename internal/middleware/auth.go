@@ -13,7 +13,7 @@ func Authenticator(ja *jwtauth.JWTAuth) func(http.Handler) http.Handler {
 			if err != nil {
 				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusUnauthorized)
-				_, _ = w.Write([]byte(`{"errors":"unauthorized"}`))
+				_, _ = w.Write([]byte(`{"errors": "unauthorized"}`))
 
 				return
 			}
@@ -21,7 +21,7 @@ func Authenticator(ja *jwtauth.JWTAuth) func(http.Handler) http.Handler {
 			if token == nil {
 				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusUnauthorized)
-				_, _ = w.Write([]byte(`{"errors":"unauthorized"}`))
+				_, _ = w.Write([]byte(`{"errors": "unauthorized"}`))
 				return
 			}
 

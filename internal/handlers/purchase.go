@@ -5,6 +5,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
+	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/usecase"
 	"log/slog"
 	"net/http"
@@ -30,7 +31,7 @@ func (ph *PurchaseHandler) Purchase(w http.ResponseWriter, r *http.Request) {
 	itemType := chi.URLParam(r, "item")
 	err = ph.purchaseUS.CreatePurchase(r.Context(), userId, itemType)
 	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
+		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, errInt.PurchaseError{}) {
 			respondWithError(w, ph.logger, 400, "PurchaseHandler", err)
 			return
 		}
