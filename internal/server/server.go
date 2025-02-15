@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	httpSwagger "github.com/swaggo/http-swagger"
 	"log/slog"
 	"net/http"
 	"os"
@@ -24,6 +23,7 @@ import (
 	"github.com/pvpender/avito-shop/internal/middleware"
 	"github.com/pvpender/avito-shop/internal/repositories"
 	"github.com/pvpender/avito-shop/internal/usecase"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 const (

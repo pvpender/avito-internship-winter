@@ -3,6 +3,12 @@ package handlers
 import (
 	"bytes"
 	"context"
+	"log/slog"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"testing"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/pvpender/avito-shop/internal/errors"
@@ -12,10 +18,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
-	"log/slog"
-	"net/http/httptest"
-	"os"
-	"testing"
 )
 
 func TestUserHandler_Info(t *testing.T) {
@@ -58,11 +60,13 @@ func TestUserHandler_Info(t *testing.T) {
 	for _, tc := range testTable {
 		t.Run(tc.name, func(t *testing.T) {
 			ctx := context.WithValue(context.Background(), chi.RouteCtxKey, &chi.Context{})
+
 			c := gomock.NewController(t)
 			defer c.Finish()
 
 			user := mock_user.NewMockUserUseCase(c)
 			tc.mockBehaviour(ctx, user, tc.userId)
+
 			lgr := slog.New(slog.NewJSONHandler(os.Stderr, nil))
 			tokenAuth := jwtauth.New("HS256", []byte("secret"), nil)
 			_, token, uErr := tokenAuth.Encode(map[string]interface{}{"user_id": 1})
@@ -77,7 +81,7 @@ func TestUserHandler_Info(t *testing.T) {
 			r.Get("/api/info", handler.Info)
 
 			w := httptest.NewRecorder()
-			req := httptest.NewRequest("GET", "/api/info", bytes.NewBufferString(""))
+			req := httptest.NewRequest(http.MethodGet, "/api/info", bytes.NewBufferString(""))
 			req.Header.Set("Authorization", "Bearer "+token)
 
 			r.ServeHTTP(w, req)

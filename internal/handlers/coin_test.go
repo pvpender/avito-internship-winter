@@ -3,6 +3,12 @@ package handlers
 import (
 	"bytes"
 	"context"
+	"log/slog"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"testing"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
@@ -12,10 +18,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
-	"log/slog"
-	"net/http/httptest"
-	"os"
-	"testing"
 )
 
 func TestCoinHandler_SendCoin(t *testing.T) {
@@ -67,11 +69,13 @@ func TestCoinHandler_SendCoin(t *testing.T) {
 	for _, tc := range testTable {
 		t.Run(tc.name, func(t *testing.T) {
 			ctx := context.WithValue(context.Background(), chi.RouteCtxKey, &chi.Context{})
+
 			c := gomock.NewController(t)
 			defer c.Finish()
 
 			coin := mock_coin.NewMockCoinUseCase(c)
 			tc.mockBehaviour(ctx, coin, tc.userId, tc.expectedParseBody)
+
 			lgr := slog.New(slog.NewJSONHandler(os.Stderr, nil))
 			tokenAuth := jwtauth.New("HS256", []byte("secret"), nil)
 			_, token, uErr := tokenAuth.Encode(map[string]interface{}{"user_id": 1})
@@ -86,7 +90,7 @@ func TestCoinHandler_SendCoin(t *testing.T) {
 			r.Post("/api/sendCoin", handler.SendCoin)
 
 			w := httptest.NewRecorder()
-			req := httptest.NewRequest("POST", "/api/sendCoin", bytes.NewBufferString(tc.inputBody))
+			req := httptest.NewRequest(http.MethodPost, "/api/sendCoin", bytes.NewBufferString(tc.inputBody))
 			req.Header.Set("Authorization", "Bearer "+token)
 
 			r.ServeHTTP(w, req)

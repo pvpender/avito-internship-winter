@@ -3,16 +3,18 @@ package handlers
 import (
 	"bytes"
 	"context"
+	"log/slog"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"testing"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
 	mock_auth "github.com/pvpender/avito-shop/internal/usecase/auth/mocks"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
-	"log/slog"
-	"net/http/httptest"
-	"os"
-	"testing"
 )
 
 func TestAuthHandler_Auth(t *testing.T) {
@@ -85,11 +87,13 @@ func TestAuthHandler_Auth(t *testing.T) {
 	for _, tc := range testTable {
 		t.Run(tc.name, func(t *testing.T) {
 			ctx := context.WithValue(context.Background(), chi.RouteCtxKey, &chi.Context{})
+
 			c := gomock.NewController(t)
 			defer c.Finish()
 
 			auth := mock_auth.NewMockAuthUseCase(c)
 			tc.mockBehaviour(ctx, auth, tc.expectedParseBody)
+
 			lgr := slog.New(slog.NewJSONHandler(os.Stderr, nil))
 
 			handler := NewAuthHandler(auth, lgr)
@@ -98,7 +102,7 @@ func TestAuthHandler_Auth(t *testing.T) {
 			r.Post("/api/auth", handler.Auth)
 
 			w := httptest.NewRecorder()
-			req := httptest.NewRequest("POST", "/api/auth", bytes.NewBufferString(tc.inputBody))
+			req := httptest.NewRequest(http.MethodPost, "/api/auth", bytes.NewBufferString(tc.inputBody))
 
 			r.ServeHTTP(w, req)
 
@@ -106,5 +110,4 @@ func TestAuthHandler_Auth(t *testing.T) {
 			assert.Equal(t, tc.expectedBody, w.Body.String())
 		})
 	}
-
 }
