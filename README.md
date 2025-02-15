@@ -44,7 +44,9 @@ curl -X 'GET' \
 
 **Важно**
 
-Не забывайте указывать `Content-Type: application/json` в заголовке, иначе CORS не пропустит
+Не забывайте указывать `Content-Type: application/json` в заголовке, иначе CORS не пропустит!
+
+Также можно использовать `test.http` как подсказку по запросам.
 
 ## Покрытие тестами
 
@@ -53,6 +55,9 @@ curl -X 'GET' \
 ## Нагрузочное тестирование
 
 Проведено с помощью [vegeta](https://github.com/tsenart/vegeta). Результат в файле plot.html и на скрине
+
+![image](https://github.com/user-attachments/assets/42f5f7cd-f83f-4f19-b3e5-92426d0a749a)
+
 
 Для RPS 1k условие задания выполняется, с увеличением его в 2 раза увеичивается задержка ответа.
 
