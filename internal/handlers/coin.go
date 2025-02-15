@@ -14,13 +14,13 @@ import (
 )
 
 type CoinHandler struct {
-	purchaseUS coin.CoinUseCase
-	jwtAuth    *jwtauth.JWTAuth
-	logger     *slog.Logger
+	coinUS  coin.CoinUseCase
+	jwtAuth *jwtauth.JWTAuth
+	logger  *slog.Logger
 }
 
-func NewCoinHandler(purchaseUS coin.CoinUseCase, jwtAuth *jwtauth.JWTAuth, logger *slog.Logger) *CoinHandler {
-	return &CoinHandler{purchaseUS: purchaseUS, jwtAuth: jwtAuth, logger: logger}
+func NewCoinHandler(coinUS coin.CoinUseCase, jwtAuth *jwtauth.JWTAuth, logger *slog.Logger) *CoinHandler {
+	return &CoinHandler{coinUS: coinUS, jwtAuth: jwtAuth, logger: logger}
 }
 
 func (ch *CoinHandler) SendCoin(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +40,7 @@ func (ch *CoinHandler) SendCoin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = ch.purchaseUS.SendCoin(r.Context(), userId, request)
+	err = ch.coinUS.SendCoin(r.Context(), userId, request)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, &errInt.InvalidAmountError{}) {
 			respondWithError(w, ch.logger, http.StatusBadRequest, "SendCoin", err)

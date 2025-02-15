@@ -2,14 +2,13 @@ package handlers
 
 import (
 	"errors"
-	"log/slog"
-	"net/http"
-
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
 	errInt "github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/usecase/purchase"
+	"log/slog"
+	"net/http"
 )
 
 type PurchaseHandler struct {
@@ -31,6 +30,7 @@ func (ph *PurchaseHandler) Purchase(w http.ResponseWriter, r *http.Request) {
 
 	userId, err := getUserIdFromJwt(r.Context(), w, ph.logger, "PurchaseHandler")
 	if err != nil {
+		respondWithError(w, ph.logger, http.StatusUnauthorized, "PurchaseHandler", &errInt.InvalidJWTError{})
 		return
 	}
 

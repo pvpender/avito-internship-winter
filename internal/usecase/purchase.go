@@ -44,7 +44,7 @@ func (p PurchaseUseCase) CreatePurchase(ctx context.Context, userId uint32, item
 
 	newAmount := updatableUser.Coins - purchasedItem.Price
 	if newAmount < 0 {
-		return &errors.PurchaseError{Msg: "Not enough coins"}
+		return &errors.PurchaseError{}
 	}
 
 	err = p.trManager.Do(ctx, func(ctx context.Context) error {

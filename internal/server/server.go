@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	httpSwagger "github.com/swaggo/http-swagger"
 	"log/slog"
 	"net/http"
 	"os"
@@ -17,6 +18,7 @@ import (
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pvpender/avito-shop/config"
+	_ "github.com/pvpender/avito-shop/docs"
 	"github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/handlers"
 	"github.com/pvpender/avito-shop/internal/middleware"
@@ -117,6 +119,7 @@ func (server *Server) PrepareHandlers(r *chi.Mux) error {
 
 	r.Group(func(r chi.Router) {
 		r.Post("/api/auth", authHandler.Auth)
+		r.Get("/swagger/*", httpSwagger.WrapHandler)
 	})
 
 	r.Group(func(r chi.Router) {

@@ -1,0 +1,2452 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>config: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/pvpender/avito-shop/config/config.go (0.0%)</option>
+				
+				<option value="file1">github.com/pvpender/avito-shop/database/postgres.go (0.0%)</option>
+				
+				<option value="file2">github.com/pvpender/avito-shop/docs/docs.go (0.0%)</option>
+				
+				<option value="file3">github.com/pvpender/avito-shop/internal/cmd/main.go (0.0%)</option>
+				
+				<option value="file4">github.com/pvpender/avito-shop/internal/errors/auth.go (33.3%)</option>
+				
+				<option value="file5">github.com/pvpender/avito-shop/internal/errors/coin.go (0.0%)</option>
+				
+				<option value="file6">github.com/pvpender/avito-shop/internal/errors/common.go (100.0%)</option>
+				
+				<option value="file7">github.com/pvpender/avito-shop/internal/errors/purchase.go (100.0%)</option>
+				
+				<option value="file8">github.com/pvpender/avito-shop/internal/errors/server.go (0.0%)</option>
+				
+				<option value="file9">github.com/pvpender/avito-shop/internal/handlers/auth.go (100.0%)</option>
+				
+				<option value="file10">github.com/pvpender/avito-shop/internal/handlers/coin.go (80.0%)</option>
+				
+				<option value="file11">github.com/pvpender/avito-shop/internal/handlers/common.go (75.9%)</option>
+				
+				<option value="file12">github.com/pvpender/avito-shop/internal/handlers/purchase.go (87.5%)</option>
+				
+				<option value="file13">github.com/pvpender/avito-shop/internal/handlers/user.go (90.0%)</option>
+				
+				<option value="file14">github.com/pvpender/avito-shop/internal/middleware/auth.go (46.7%)</option>
+				
+				<option value="file15">github.com/pvpender/avito-shop/internal/models/auth.go (100.0%)</option>
+				
+				<option value="file16">github.com/pvpender/avito-shop/internal/models/coins.go (50.0%)</option>
+				
+				<option value="file17">github.com/pvpender/avito-shop/internal/repositories/coin.go (0.0%)</option>
+				
+				<option value="file18">github.com/pvpender/avito-shop/internal/repositories/item.go (0.0%)</option>
+				
+				<option value="file19">github.com/pvpender/avito-shop/internal/repositories/purchase.go (0.0%)</option>
+				
+				<option value="file20">github.com/pvpender/avito-shop/internal/repositories/user.go (0.0%)</option>
+				
+				<option value="file21">github.com/pvpender/avito-shop/internal/server/server.go (0.0%)</option>
+				
+				<option value="file22">github.com/pvpender/avito-shop/internal/usecase/auth.go (0.0%)</option>
+				
+				<option value="file23">github.com/pvpender/avito-shop/internal/usecase/auth/mocks/mock.go (64.7%)</option>
+				
+				<option value="file24">github.com/pvpender/avito-shop/internal/usecase/coin.go (0.0%)</option>
+				
+				<option value="file25">github.com/pvpender/avito-shop/internal/usecase/coin/mocks/mock.go (35.7%)</option>
+				
+				<option value="file26">github.com/pvpender/avito-shop/internal/usecase/item/mocks/mock.go (0.0%)</option>
+				
+				<option value="file27">github.com/pvpender/avito-shop/internal/usecase/purchase.go (0.0%)</option>
+				
+				<option value="file28">github.com/pvpender/avito-shop/internal/usecase/purchase/mocks/mock.go (35.7%)</option>
+				
+				<option value="file29">github.com/pvpender/avito-shop/internal/usecase/user.go (0.0%)</option>
+				
+				<option value="file30">github.com/pvpender/avito-shop/internal/usecase/user/mocks/mock.go (22.9%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package config
+
+import (
+        "github.com/spf13/viper"
+)
+
+type Config struct {
+        Server   HTTPServer
+        Postgres PostgresConfig
+        Auth     AuthConfig
+}
+
+type HTTPServer struct {
+        Port string
+}
+
+type PostgresConfig struct {
+        Host     string
+        Port     string
+        Database string
+        Username string
+        Password string
+}
+
+type AuthConfig struct {
+        Secret string
+}
+
+func LoadConfig(filename string, configType string) (*Config, error) <span class="cov0" title="0">{
+        v := viper.New()
+        v.SetConfigName(filename)
+        v.SetConfigType(configType)
+        v.AddConfigPath(".")
+        v.AutomaticEnv()
+
+        if err := v.ReadInConfig(); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">var config Config
+        if err := v.Unmarshal(&amp;config); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return &amp;config, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package database
+
+import (
+        "context"
+        "fmt"
+
+        "github.com/jackc/pgx/v5/pgxpool"
+        "github.com/pvpender/avito-shop/config"
+)
+
+func NewPgPool(config *config.Config) (*pgxpool.Pool, error) <span class="cov0" title="0">{
+        connStr := fmt.Sprintf(
+                "postgres://%s:%s@%s:%s/%s",
+                config.Postgres.Username,
+                config.Postgres.Password,
+                config.Postgres.Host,
+                config.Postgres.Port,
+                config.Postgres.Database,
+        )
+
+        pool, err := pgxpool.New(context.Background(), connStr)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">if errDb := pool.Ping(context.Background()); errDb != nil </span><span class="cov0" title="0">{
+                return nil, errDb
+        }</span>
+
+        <span class="cov0" title="0">return pool, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">// Package docs Code generated by swaggo/swag. DO NOT EDIT
+package docs
+
+import (
+        "bytes"
+        "encoding/json"
+        "github.com/swaggo/swag"
+        "html/template"
+        "strings"
+)
+
+var doc = `
+{
+  "info": {
+    "title": "API Avito shop",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/info": {
+      "get": {
+        "summary": "Получить информацию о монетах, инвентаре и истории транзакций.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный ответ.",
+            "schema": {
+              "$ref": "#/definitions/InfoResponse"
+            }
+          },
+          "400": {
+            "description": "Неверный запрос.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Неавторизован.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/sendCoin": {
+      "post": {
+        "summary": "Отправить монеты другому пользователю.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный ответ."
+          },
+          "400": {
+            "description": "Неверный запрос.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Неавторизован.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/SendCoinRequest"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/buy/{item}": {
+      "get": {
+        "summary": "Купить предмет за монеты.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный ответ."
+          },
+          "400": {
+            "description": "Неверный запрос.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Неавторизован.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/auth": {
+      "post": {
+        "summary": "Аутентификация и получение JWT-токена.",
+        "responses": {
+          "200": {
+            "description": "Успешная аутентификация.",
+            "schema": {
+              "$ref": "#/definitions/AuthResponse"
+            }
+          },
+          "400": {
+            "description": "Неверный запрос.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Неавторизован.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AuthRequest"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "host": "localhost:8080",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/",
+  "definitions": {
+    "InfoResponse": {
+      "type": "object",
+      "properties": {
+        "coins": {
+          "type": "integer",
+          "description": "Количество доступных монет."
+        },
+        "inventory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Тип предмета."
+              },
+              "quantity": {
+                "type": "integer",
+                "description": "Количество предметов."
+              }
+            }
+          }
+        },
+        "coinHistory": {
+          "type": "object",
+          "properties": {
+            "received": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "fromUser": {
+                    "type": "string",
+                    "description": "Имя пользователя, который отправил монеты."
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "description": "Количество полученных монет."
+                  }
+                }
+              }
+            },
+            "sent": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "toUser": {
+                    "type": "string",
+                    "description": "Имя пользователя, которому отправлены монеты."
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "description": "Количество отправленных монет."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "string",
+          "description": "Сообщение об ошибке, описывающее проблему."
+        }
+      }
+    },
+    "AuthRequest": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "Имя пользователя для аутентификации."
+        },
+        "password": {
+          "type": "string",
+          "format": "password",
+          "description": "Пароль для аутентификации."
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "AuthResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": "JWT-токен для доступа к защищенным ресурсам."
+        }
+      }
+    },
+    "SendCoinRequest": {
+      "type": "object",
+      "properties": {
+        "toUser": {
+          "type": "string",
+          "description": "Имя пользователя, которому нужно отправить монеты."
+        },
+        "amount": {
+          "type": "integer",
+          "description": "Количество монет, которые необходимо отправить."
+        }
+      },
+      "required": [
+        "toUser",
+        "amount"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "x-components": {}
+}
+`
+
+type swaggerInfo struct {
+        Version     string
+        Host        string
+        BasePath    string
+        Schemes     []string
+        Title       string
+        Description string
+}
+
+// SwaggerInfo holds exported Swagger Info so clients can modify it
+var SwaggerInfo = swaggerInfo{
+        Version:     "1.0",
+        Host:        "localhost:8080",
+        BasePath:    "/api",
+        Schemes:     []string{},
+        Title:       "API Avito Shop",
+        Description: "",
+}
+
+type s struct{}
+
+func (s *s) ReadDoc() string <span class="cov0" title="0">{
+        sInfo := SwaggerInfo
+        sInfo.Description = strings.Replace(sInfo.Description, "\n", "\\n", -1)
+
+        t, err := template.New("swagger_info").Funcs(template.FuncMap{
+                "marshal": func(v interface{}) string </span><span class="cov0" title="0">{
+                        a, _ := json.Marshal(v)
+                        return string(a)
+                }</span>,
+        }).Parse(doc)
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return doc
+        }</span>
+
+        <span class="cov0" title="0">var tpl bytes.Buffer
+        if err := t.Execute(&amp;tpl, sInfo); err != nil </span><span class="cov0" title="0">{
+                return doc
+        }</span>
+
+        <span class="cov0" title="0">return tpl.String()</span>
+}
+
+func init() <span class="cov0" title="0">{
+        swag.Register(swag.Name, &amp;s{})
+}</span>
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package main
+
+import (
+        "log/slog"
+        "os"
+
+        "github.com/Masterminds/squirrel"
+        trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
+        "github.com/avito-tech/go-transaction-manager/trm/v2/manager"
+        "github.com/go-chi/jwtauth/v5"
+        "github.com/pvpender/avito-shop/config"
+        "github.com/pvpender/avito-shop/database"
+        server "github.com/pvpender/avito-shop/internal/server"
+)
+
+const (
+        configFile = "config.yaml"
+        configType = "yaml"
+)
+
+func main() <span class="cov0" title="0">{
+        lgr := slog.New(slog.NewJSONHandler(os.Stderr, nil))
+        cfg, err := config.LoadConfig(configFile, configType)
+
+        if err != nil </span><span class="cov0" title="0">{
+                lgr.Error(err.Error())
+        }</span>
+
+        <span class="cov0" title="0">pgDB, err := database.NewPgPool(cfg)
+        if err != nil </span><span class="cov0" title="0">{
+                lgr.Error(err.Error())
+        }</span>
+
+        <span class="cov0" title="0">defer pgDB.Close()
+        trManager := manager.Must(trmpgx.NewDefaultFactory(pgDB))
+        builder := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
+        tokenAuth := jwtauth.New("HS256", []byte(cfg.Auth.Secret), nil)
+
+        s := server.NewServer(cfg, tokenAuth, pgDB, trManager, &amp;builder, lgr)
+        if sErr := s.Run(); sErr != nil </span><span class="cov0" title="0">{
+                lgr.Error(sErr.Error())
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package errors
+
+type InvalidCredentialsError struct {
+}
+
+func (e InvalidCredentialsError) Error() string <span class="cov8" title="1">{
+        return "invalid credentials"
+}</span>
+
+type InvalidJWTError struct {
+}
+
+func (e InvalidJWTError) Error() string <span class="cov0" title="0">{
+        return "invalid jwt"
+}</span>
+
+type InvalidTransmissionError struct {
+}
+
+func (e InvalidTransmissionError) Error() string <span class="cov0" title="0">{
+        return "invalid transmission type"
+}</span>
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package errors
+
+type InvalidAmountError struct {
+}
+
+func (e InvalidAmountError) Error() string <span class="cov0" title="0">{
+        return "amount must be positive"
+}</span>
+
+type InvalidCoinOperationError struct {
+}
+
+func (e InvalidCoinOperationError) Error() string <span class="cov0" title="0">{
+        return "coin operation cannot be processed, check user and amount"
+}</span>
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package errors
+
+type NilPointerError struct {
+}
+
+func (e NilPointerError) Error() string <span class="cov8" title="1">{
+        return "pointer is nil"
+}</span>
+
+type ValidationError struct {
+}
+
+func (e ValidationError) Error() string <span class="cov8" title="1">{
+        return "validation failed"
+}</span>
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package errors
+
+type PurchaseError struct {
+}
+
+func (e PurchaseError) Error() string <span class="cov8" title="1">{
+        return "not enough coins"
+}</span>
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package errors
+
+type ShutdownError struct {
+}
+
+func (err ShutdownError) Error() string <span class="cov0" title="0">{
+        return "ShutdownError: server is shutting down"
+}</span>
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package handlers
+
+import (
+        "encoding/json"
+        "errors"
+        errInt "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/models"
+        "github.com/pvpender/avito-shop/internal/usecase/auth"
+        "log/slog"
+        "net/http"
+)
+
+type AuthHandler struct {
+        authUS auth.AuthUseCase
+        logger *slog.Logger
+}
+
+func NewAuthHandler(authUS auth.AuthUseCase, logger *slog.Logger) *AuthHandler <span class="cov8" title="1">{
+        return &amp;AuthHandler{authUS: authUS, logger: logger}
+}</span>
+
+func (handler *AuthHandler) Auth(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        handler.logger.Info("Auth called")
+
+        var request *models.AuthRequest
+
+        err := json.NewDecoder(r.Body).Decode(&amp;request)
+        if err != nil || !request.Validate() </span><span class="cov8" title="1">{
+                respondWithError(w, handler.logger, http.StatusBadRequest, "AuthHandler", err)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response, err := handler.authUS.Authenticate(r.Context(), request)
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, &amp;errInt.InvalidCredentialsError{}) </span><span class="cov8" title="1">{
+                        respondWithError(w, handler.logger, http.StatusUnauthorized, "AuthHandler", err)
+                        return
+                }</span>
+
+                <span class="cov8" title="1">respondWithError(w, handler.logger, http.StatusInternalServerError, "AuthHandler", err)
+
+                return</span>
+        }
+
+        <span class="cov8" title="1">respondWithJSON(w, response, handler.logger, "AuthHandler")</span>
+}
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package handlers
+
+import (
+        "encoding/json"
+        "errors"
+        "log/slog"
+        "net/http"
+
+        "github.com/go-chi/jwtauth/v5"
+        "github.com/jackc/pgx/v5"
+        errInt "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/models"
+        "github.com/pvpender/avito-shop/internal/usecase/coin"
+)
+
+type CoinHandler struct {
+        coinUS  coin.CoinUseCase
+        jwtAuth *jwtauth.JWTAuth
+        logger  *slog.Logger
+}
+
+func NewCoinHandler(coinUS coin.CoinUseCase, jwtAuth *jwtauth.JWTAuth, logger *slog.Logger) *CoinHandler <span class="cov8" title="1">{
+        return &amp;CoinHandler{coinUS: coinUS, jwtAuth: jwtAuth, logger: logger}
+}</span>
+
+func (ch *CoinHandler) SendCoin(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        ch.logger.Info("SendCoin called")
+
+        userId, err := getUserIdFromJwt(r.Context(), w, ch.logger, "CoinHandler")
+        if err != nil </span><span class="cov0" title="0">{
+                respondWithError(w, ch.logger, http.StatusInternalServerError, "CoinHandler", err)
+                return
+        }</span>
+
+        <span class="cov8" title="1">var request *models.SendCoinRequest
+
+        err = json.NewDecoder(r.Body).Decode(&amp;request)
+        if err != nil || !request.Validate() </span><span class="cov8" title="1">{
+                respondWithError(w, ch.logger, http.StatusBadRequest, "SendCoin", err)
+                return
+        }</span>
+
+        <span class="cov8" title="1">err = ch.coinUS.SendCoin(r.Context(), userId, request)
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, &amp;errInt.InvalidAmountError{}) </span><span class="cov8" title="1">{
+                        respondWithError(w, ch.logger, http.StatusBadRequest, "SendCoin", err)
+                        return
+                }</span>
+
+                <span class="cov0" title="0">respondWithError(w, ch.logger, http.StatusInternalServerError, "SendCoin", err)
+
+                return</span>
+        }
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)</span>
+}
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package handlers
+
+import (
+        "context"
+        "encoding/json"
+        "log/slog"
+        "net/http"
+
+        "github.com/go-chi/jwtauth/v5"
+        "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/models"
+)
+
+func respondWithError(w http.ResponseWriter, l *slog.Logger, statusCode int, handlerName string, err error) <span class="cov8" title="1">{
+        if err == nil </span><span class="cov8" title="1">{
+                err = &amp;errors.ValidationError{}
+        }</span>
+
+        <span class="cov8" title="1">l.Error(err.Error(), "handler", handlerName)
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(statusCode)
+
+        errMessage := &amp;models.ErrorResponse{}
+
+        switch statusCode </span>{
+        case http.StatusBadRequest:<span class="cov8" title="1">
+                errMessage.Errors = "bad request"</span>
+        case http.StatusUnauthorized:<span class="cov8" title="1">
+                errMessage.Errors = "invalid credentials"</span>
+        case http.StatusForbidden:<span class="cov0" title="0">
+                errMessage.Errors = "forbidden"</span>
+        default:<span class="cov8" title="1">
+                errMessage.Errors = "internal server error"</span>
+        }
+
+        <span class="cov8" title="1">response, _ := json.Marshal(errMessage)
+        _, _ = w.Write(response)</span>
+}
+
+func respondWithJSON(w http.ResponseWriter, payload interface{}, logger *slog.Logger, handlerName string) <span class="cov8" title="1">{
+        response, err := json.Marshal(payload)
+        if err != nil </span><span class="cov0" title="0">{
+                respondWithError(w, logger, http.StatusInternalServerError, handlerName, err)
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+        _, _ = w.Write(response)</span>
+}
+
+func getUserIdFromJwt(
+        ctx context.Context,
+        w http.ResponseWriter,
+        logger *slog.Logger,
+        handlerName string,
+) (uint32, error) <span class="cov8" title="1">{
+        _, claims, err := jwtauth.FromContext(ctx)
+        if err != nil </span><span class="cov0" title="0">{
+                respondWithError(w, logger, http.StatusInternalServerError, handlerName, err)
+                return 0, err
+        }</span>
+
+        <span class="cov8" title="1">userId, ok := claims["user_id"].(float64)
+
+        if !ok </span><span class="cov0" title="0">{
+                respondWithError(w, logger, http.StatusInternalServerError, handlerName, &amp;errors.InvalidJWTError{})
+                return 0, &amp;errors.InvalidJWTError{}
+        }</span>
+
+        <span class="cov8" title="1">return uint32(userId), nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package handlers
+
+import (
+        "errors"
+        "github.com/go-chi/chi/v5"
+        "github.com/go-chi/jwtauth/v5"
+        "github.com/jackc/pgx/v5"
+        errInt "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/usecase/purchase"
+        "log/slog"
+        "net/http"
+)
+
+type PurchaseHandler struct {
+        purchaseUS purchase.PurchaseUseCase
+        jwtAuth    *jwtauth.JWTAuth
+        logger     *slog.Logger
+}
+
+func NewPurchaseHandler(
+        purchaseUS purchase.PurchaseUseCase,
+        jwtAuth *jwtauth.JWTAuth,
+        logger *slog.Logger,
+) *PurchaseHandler <span class="cov8" title="1">{
+        return &amp;PurchaseHandler{purchaseUS: purchaseUS, jwtAuth: jwtAuth, logger: logger}
+}</span>
+
+func (ph *PurchaseHandler) Purchase(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        ph.logger.Info("Purchase called")
+
+        userId, err := getUserIdFromJwt(r.Context(), w, ph.logger, "PurchaseHandler")
+        if err != nil </span><span class="cov0" title="0">{
+                respondWithError(w, ph.logger, http.StatusUnauthorized, "PurchaseHandler", &amp;errInt.InvalidJWTError{})
+                return
+        }</span>
+
+        <span class="cov8" title="1">itemType := chi.URLParam(r, "item")
+
+        err = ph.purchaseUS.CreatePurchase(r.Context(), userId, itemType)
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, pgx.ErrNoRows) || errors.Is(err, &amp;errInt.PurchaseError{}) </span><span class="cov8" title="1">{
+                        respondWithError(w, ph.logger, http.StatusBadRequest, "PurchaseHandler", err)
+                        return
+                }</span>
+
+                <span class="cov8" title="1">respondWithError(w, ph.logger, http.StatusInternalServerError, "PurchaseHandler", err)
+
+                return</span>
+        }
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)</span>
+}
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package handlers
+
+import (
+        "log/slog"
+        "net/http"
+
+        "github.com/go-chi/jwtauth/v5"
+        "github.com/pvpender/avito-shop/internal/usecase/user"
+)
+
+type UserHandler struct {
+        userUS  user.UserUseCase
+        jwtAuth *jwtauth.JWTAuth
+        logger  *slog.Logger
+}
+
+func NewUserHandler(us user.UserUseCase, jwtAuth *jwtauth.JWTAuth, l *slog.Logger) *UserHandler <span class="cov8" title="1">{
+        return &amp;UserHandler{userUS: us, jwtAuth: jwtAuth, logger: l}
+}</span>
+
+func (uh *UserHandler) Info(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        uh.logger.Info("Info called")
+
+        userId, err := getUserIdFromJwt(r.Context(), w, uh.logger, "UserHandler")
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">info, err := uh.userUS.GetInfo(r.Context(), userId)
+        if err != nil </span><span class="cov8" title="1">{
+                respondWithError(w, uh.logger, http.StatusInternalServerError, "UserHandler", err)
+                return
+        }</span>
+
+        <span class="cov8" title="1">respondWithJSON(w, info, uh.logger, "UserHandler")</span>
+}
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package middleware
+
+import (
+        "net/http"
+
+        "github.com/go-chi/jwtauth/v5"
+)
+
+func Authenticator(ja *jwtauth.JWTAuth) func(http.Handler) http.Handler <span class="cov8" title="1">{
+        return func(next http.Handler) http.Handler </span><span class="cov8" title="1">{
+                hfn := func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                        token, _, err := jwtauth.FromContext(r.Context())
+
+                        if err != nil </span><span class="cov0" title="0">{
+                                w.Header().Set("Content-Type", "application/json")
+                                w.WriteHeader(http.StatusUnauthorized)
+                                _, _ = w.Write([]byte(`{"errors": "unauthorized"}`))
+
+                                return
+                        }</span>
+
+                        <span class="cov8" title="1">if token == nil </span><span class="cov0" title="0">{
+                                w.Header().Set("Content-Type", "application/json")
+                                w.WriteHeader(http.StatusUnauthorized)
+                                _, _ = w.Write([]byte(`{"errors": "unauthorized"}`))
+
+                                return
+                        }</span>
+
+                        <span class="cov8" title="1">next.ServeHTTP(w, r)</span>
+                }
+
+                <span class="cov8" title="1">return http.HandlerFunc(hfn)</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package models
+
+type AuthRequest struct {
+        Username string `json:"username"`
+        Password string `json:"password"`
+}
+
+type AuthResponse struct {
+        Token string `json:"token"`
+}
+
+func (req *AuthRequest) Validate() bool <span class="cov8" title="1">{
+        if len(req.Username) == 0 || len(req.Password) == 0 </span><span class="cov8" title="1">{
+                return false
+        }</span>
+
+        <span class="cov8" title="1">return true</span>
+}
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package models
+
+import "github.com/pvpender/avito-shop/internal/errors"
+
+type SendCoinRequest struct {
+        ToUser string `json:"toUser"`
+        Amount int32  `json:"amount"`
+}
+
+type ReceivedCoin struct {
+        FromUser string `json:"fromUser"`
+        Amount   int32  `json:"amount"`
+}
+
+type CoinOperationWithIds struct {
+        FromUser uint32
+        ToUser   uint32
+        Amount   int32
+}
+
+type CoinOperationWithUsernames struct {
+        FromUser string
+        ToUser   string
+        Amount   int32
+}
+
+type CoinHistory struct {
+        Received []*ReceivedCoin    `json:"received"`
+        Sent     []*SendCoinRequest `json:"sent"`
+}
+
+func CreateCoinOperationWithIds(fromUser uint32, toUser uint32, amount int32) (*CoinOperationWithIds, error) <span class="cov0" title="0">{
+        if (fromUser == toUser) || amount &lt;= 0 </span><span class="cov0" title="0">{
+                return nil, &amp;errors.InvalidCoinOperationError{}
+        }</span>
+
+        <span class="cov0" title="0">return &amp;CoinOperationWithIds{fromUser, toUser, amount}, nil</span>
+}
+
+func (coinRequest *SendCoinRequest) Validate() bool <span class="cov8" title="1">{
+        if coinRequest.ToUser == "" || coinRequest.Amount &lt;= 0 </span><span class="cov8" title="1">{
+                return false
+        }</span>
+
+        <span class="cov8" title="1">return true</span>
+}
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package repositories
+
+import (
+        "context"
+
+        "github.com/Masterminds/squirrel"
+        trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
+        "github.com/jackc/pgx/v5/pgxpool"
+        "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/models"
+        "github.com/pvpender/avito-shop/internal/usecase/coin"
+)
+
+const CoinTableName = "send_history"
+
+type PgCoinRepository struct {
+        db      *pgxpool.Pool
+        getter  *trmpgx.CtxGetter
+        builder *squirrel.StatementBuilderType
+}
+
+func NewPgCoinRepository(
+        db *pgxpool.Pool,
+        getter *trmpgx.CtxGetter,
+        builder *squirrel.StatementBuilderType,
+) *PgCoinRepository <span class="cov0" title="0">{
+        return &amp;PgCoinRepository{db: db, getter: getter, builder: builder}
+}</span>
+
+func (p *PgCoinRepository) CreateTransmission(
+        ctx context.Context,
+        request *models.CoinOperationWithIds,
+) (int32, error) <span class="cov0" title="0">{
+        if request == nil </span><span class="cov0" title="0">{
+                return -1, &amp;errors.NilPointerError{}
+        }</span>
+
+        <span class="cov0" title="0">query, args, err := p.builder.Insert(CoinTableName).
+                Columns("from_user", "to_user", "amount").
+                Values(request.FromUser, request.ToUser, request.Amount).
+                Suffix("RETURNING id").
+                ToSql()
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+
+        <span class="cov0" title="0">conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
+        var id int32
+
+        err = conn.QueryRow(ctx, query, args...).Scan(&amp;id)
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+
+        <span class="cov0" title="0">return id, nil</span>
+}
+
+func (p *PgCoinRepository) GetUserTransmissions(
+        ctx context.Context,
+        userId uint32,
+        transmissionType coin.TransmissionType,
+) ([]*models.CoinOperationWithUsernames, error) <span class="cov0" title="0">{
+        var expr map[string]interface{}
+
+        switch transmissionType </span>{
+        case coin.Sent:<span class="cov0" title="0">
+                expr = squirrel.Eq{"from_user": userId}</span>
+
+        case coin.Received:<span class="cov0" title="0">
+                expr = squirrel.Eq{"to_user": userId}</span>
+
+        default:<span class="cov0" title="0">
+                return nil, &amp;errors.InvalidTransmissionError{}</span>
+        }
+
+        <span class="cov0" title="0">query, args, err := p.builder.Select("u.username", "u2.username", "amount").
+                From(CoinTableName).
+                LeftJoin("users u on u.id = send_history.from_user").
+                LeftJoin("users u2 on u2.id = send_history.to_user").
+                Where(expr).
+                ToSql()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
+        rows, err := conn.Query(ctx, query, args...)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">defer rows.Close()
+
+        coinOperations := make([]*models.CoinOperationWithUsernames, 0)
+
+        for rows.Next() </span><span class="cov0" title="0">{
+                coinOperation := &amp;models.CoinOperationWithUsernames{}
+
+                err = rows.Scan(&amp;coinOperation.FromUser, &amp;coinOperation.ToUser, &amp;coinOperation.Amount)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+
+                <span class="cov0" title="0">coinOperations = append(coinOperations, coinOperation)</span>
+        }
+
+        <span class="cov0" title="0">return coinOperations, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package repositories
+
+import (
+        "context"
+
+        "github.com/Masterminds/squirrel"
+        trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
+        "github.com/jackc/pgx/v5/pgxpool"
+        "github.com/pvpender/avito-shop/internal/models"
+)
+
+const ItemTableName = "merch"
+
+type PgItemRepository struct {
+        db      *pgxpool.Pool
+        getter  *trmpgx.CtxGetter
+        builder *squirrel.StatementBuilderType
+}
+
+func NewPgItemRepository(
+        db *pgxpool.Pool,
+        getter *trmpgx.CtxGetter,
+        builder *squirrel.StatementBuilderType,
+) *PgItemRepository <span class="cov0" title="0">{
+        return &amp;PgItemRepository{db: db, getter: getter, builder: builder}
+}</span>
+
+func (p *PgItemRepository) GetItemByType(ctx context.Context, itemType string) (*models.Purchase, error) <span class="cov0" title="0">{
+        query, args, err := p.builder.Select("*").
+                From(ItemTableName).
+                Where(squirrel.Eq{"item_type": itemType}).
+                ToSql()
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
+        var item models.Purchase
+        err = conn.QueryRow(ctx, query, args...).Scan(&amp;item.ItemId, &amp;item.ItemType, &amp;item.Price)
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return &amp;item, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package repositories
+
+import (
+        "context"
+
+        "github.com/Masterminds/squirrel"
+        trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
+        "github.com/jackc/pgx/v5/pgxpool"
+        "github.com/pvpender/avito-shop/internal/models"
+)
+
+const PurchaseTableName = "purchases_history"
+
+type PgPurchaseRepository struct {
+        db      *pgxpool.Pool
+        getter  *trmpgx.CtxGetter
+        builder *squirrel.StatementBuilderType
+}
+
+func NewPgPurchaseRepository(
+        db *pgxpool.Pool,
+        getter *trmpgx.CtxGetter,
+        builder *squirrel.StatementBuilderType,
+) *PgPurchaseRepository <span class="cov0" title="0">{
+        return &amp;PgPurchaseRepository{db: db, getter: getter, builder: builder}
+}</span>
+
+func (p *PgPurchaseRepository) CreatePurchase(ctx context.Context, userId uint32, itemId uint32) (int32, error) <span class="cov0" title="0">{
+        query, args, err := p.builder.Insert(PurchaseTableName).
+                Columns("user_id", "item_id").
+                Values(userId, itemId).
+                Suffix("RETURNING id").
+                ToSql()
+
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+
+        <span class="cov0" title="0">conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
+        var id int32
+
+        err = conn.QueryRow(ctx, query, args...).Scan(&amp;id)
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+
+        <span class="cov0" title="0">return id, nil</span>
+}
+
+func (p *PgPurchaseRepository) GetUserPurchases(ctx context.Context, userId uint32) ([]*models.Item, error) <span class="cov0" title="0">{
+        query, args, err := p.builder.Select("item_type", "count(item_type) as count").
+                From(PurchaseTableName).
+                LeftJoin("users on users.id = user_id").
+                LeftJoin("merch on merch.id = item_id").
+                Where(squirrel.Eq{"user_id": userId}).
+                GroupBy("item_type").
+                ToSql()
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
+        rows, err := conn.Query(ctx, query, args...)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">defer rows.Close()
+
+        items := make([]*models.Item, 0)
+
+        for rows.Next() </span><span class="cov0" title="0">{
+                newItem := &amp;models.Item{}
+
+                err = rows.Scan(&amp;newItem.ItemType, &amp;newItem.Quantity)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+
+                <span class="cov0" title="0">items = append(items, newItem)</span>
+        }
+
+        <span class="cov0" title="0">return items, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package repositories
+
+import (
+        "context"
+
+        "github.com/Masterminds/squirrel"
+        trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
+        "github.com/jackc/pgx/v5/pgxpool"
+        "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/models"
+)
+
+const (
+        UserTableName    = "users"
+        DefaultUserCoins = 1000
+)
+
+type PgUserRepository struct {
+        db      *pgxpool.Pool
+        getter  *trmpgx.CtxGetter
+        builder *squirrel.StatementBuilderType
+}
+
+func NewPgUserRepository(
+        db *pgxpool.Pool,
+        getter *trmpgx.CtxGetter,
+        builder *squirrel.StatementBuilderType,
+) *PgUserRepository <span class="cov0" title="0">{
+        return &amp;PgUserRepository{db: db, getter: getter, builder: builder}
+}</span>
+
+func (p *PgUserRepository) GetUserById(ctx context.Context, userId uint32) (*models.User, error) <span class="cov0" title="0">{
+        query, args, err := p.builder.Select("*").From(UserTableName).Where(squirrel.Eq{"id": userId}).ToSql()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">conn := p.getter.DefaultTrOrDB(ctx, p.db)
+        row := conn.QueryRow(ctx, query, args...)
+
+        user := &amp;models.User{}
+        err = row.Scan(&amp;user.UserId, &amp;user.Username, &amp;user.Password, &amp;user.Coins)
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return user, nil</span>
+}
+
+func (p *PgUserRepository) GetUserByUsername(ctx context.Context, username string) (*models.User, error) <span class="cov0" title="0">{
+        query, args, err := p.builder.Select("*").
+                From(UserTableName).
+                Where(squirrel.Eq{"username": username}).
+                ToSql()
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">conn := p.getter.DefaultTrOrDB(ctx, p.db)
+        row := conn.QueryRow(ctx, query, args...)
+
+        user := &amp;models.User{}
+        err = row.Scan(&amp;user.UserId, &amp;user.Username, &amp;user.Password, &amp;user.Coins)
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return user, nil</span>
+}
+
+func (p *PgUserRepository) CreateUser(ctx context.Context, request *models.AuthRequest) (int32, error) <span class="cov0" title="0">{
+        if request == nil </span><span class="cov0" title="0">{
+                return -1, errors.NilPointerError{}
+        }</span>
+
+        <span class="cov0" title="0">query, args, err := p.builder.Insert(UserTableName).
+                Columns("username", "password", "coins").
+                Values(request.Username, request.Password, DefaultUserCoins).
+                Suffix("RETURNING id").
+                ToSql()
+
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+
+        <span class="cov0" title="0">conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
+        var userId int32
+
+        err = conn.QueryRow(ctx, query, args...).Scan(&amp;userId)
+        if err != nil </span><span class="cov0" title="0">{
+                return -1, err
+        }</span>
+
+        <span class="cov0" title="0">return userId, nil</span>
+}
+
+func (p *PgUserRepository) UpdateUserCoins(ctx context.Context, userId uint32, coins int32) error <span class="cov0" title="0">{
+        query, args, err := p.builder.
+                Update(UserTableName).
+                Where(squirrel.Eq{"id": userId}).
+                Set("coins", coins).
+                ToSql()
+
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">conn := p.getter.DefaultTrOrDB(ctx, p.db)
+
+        _, err = conn.Exec(ctx, query, args...)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package server
+
+import (
+        "context"
+        httpSwagger "github.com/swaggo/http-swagger"
+        "log/slog"
+        "net/http"
+        "os"
+        "os/signal"
+        "time"
+
+        "github.com/Masterminds/squirrel"
+        trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
+        "github.com/avito-tech/go-transaction-manager/trm/v2/manager"
+        "github.com/go-chi/chi/v5"
+        middleware2 "github.com/go-chi/chi/v5/middleware"
+        "github.com/go-chi/cors"
+        "github.com/go-chi/jwtauth/v5"
+        "github.com/jackc/pgx/v5/pgxpool"
+        "github.com/pvpender/avito-shop/config"
+        _ "github.com/pvpender/avito-shop/docs"
+        "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/handlers"
+        "github.com/pvpender/avito-shop/internal/middleware"
+        "github.com/pvpender/avito-shop/internal/repositories"
+        "github.com/pvpender/avito-shop/internal/usecase"
+)
+
+const (
+        GracefulShutdownTimeOut = 5
+        ServerTimeOut           = 3
+        ServerMaxAge            = 300
+)
+
+type Server struct {
+        config    *config.Config
+        jwtAuth   *jwtauth.JWTAuth
+        db        *pgxpool.Pool
+        trManager *manager.Manager
+        builder   *squirrel.StatementBuilderType
+        logger    *slog.Logger
+}
+
+func NewServer(
+        config *config.Config,
+        jwtAuth *jwtauth.JWTAuth,
+        db *pgxpool.Pool,
+        trManager *manager.Manager,
+        builder *squirrel.StatementBuilderType,
+        logger *slog.Logger,
+) *Server <span class="cov0" title="0">{
+        return &amp;Server{config, jwtAuth, db, trManager, builder, logger}
+}</span>
+
+func (server *Server) Run() error <span class="cov0" title="0">{
+        r := chi.NewRouter()
+        _ = server.PrepareHandlers(r)
+
+        go func() </span><span class="cov0" title="0">{
+                server.logger.With(
+                        slog.String("port", server.config.Server.Port),
+                ).Info("Server running on port")
+
+                serv := &amp;http.Server{
+                        Addr:              server.config.Server.Port,
+                        Handler:           r,
+                        ReadHeaderTimeout: ServerTimeOut * time.Second,
+                }
+                if err := serv.ListenAndServe(); err != nil </span><span class="cov0" title="0">{
+                        server.logger.Error(err.Error())
+                }</span>
+        }()
+
+        <span class="cov0" title="0">quit := make(chan os.Signal, 1)
+        signal.Notify(quit, os.Interrupt)
+
+        &lt;-quit
+
+        ctx, shutdown := context.WithTimeout(context.Background(), GracefulShutdownTimeOut*time.Second)
+        defer shutdown()
+
+        &lt;-ctx.Done()
+        server.logger.Warn("Server shutting down")
+
+        return &amp;errors.ShutdownError{}</span>
+}
+
+func (server *Server) PrepareHandlers(r *chi.Mux) error <span class="cov0" title="0">{
+        coinRepo := repositories.NewPgCoinRepository(server.db, trmpgx.DefaultCtxGetter, server.builder)
+        itemRepo := repositories.NewPgItemRepository(server.db, trmpgx.DefaultCtxGetter, server.builder)
+        purchaseRepo := repositories.NewPgPurchaseRepository(server.db, trmpgx.DefaultCtxGetter, server.builder)
+        userRepo := repositories.NewPgUserRepository(server.db, trmpgx.DefaultCtxGetter, server.builder)
+
+        authUS := usecase.NewAuthUseCase(server.jwtAuth, userRepo, server.logger)
+        coinUS := usecase.NewCoinUseCase(server.trManager, userRepo, coinRepo)
+        purchaseUS := usecase.NewPurchaseUseCase(server.trManager, purchaseRepo, userRepo, itemRepo)
+        userUS := usecase.NewUserUseCase(userRepo, purchaseRepo, coinRepo)
+
+        authHandler := handlers.NewAuthHandler(authUS, server.logger)
+        userHandler := handlers.NewUserHandler(userUS, server.jwtAuth, server.logger)
+        purchaseHandler := handlers.NewPurchaseHandler(purchaseUS, server.jwtAuth, server.logger)
+        coinHandler := handlers.NewCoinHandler(coinUS, server.jwtAuth, server.logger)
+
+        r.Use(cors.Handler(cors.Options{
+                AllowedOrigins:   []string{"https://*", "http://*"},
+                AllowedMethods:   []string{"GET", "POST"},
+                AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+                ExposedHeaders:   []string{"Link"},
+                AllowCredentials: false,
+                MaxAge:           ServerMaxAge,
+        }))
+
+        r.Use(middleware2.Recoverer)
+        r.Use(middleware2.AllowContentType("application/json"))
+        r.Use(middleware2.RedirectSlashes)
+        r.Use(middleware2.RequestID)
+        r.Use(middleware2.CleanPath)
+        r.Use(middleware2.NoCache)
+
+        r.Group(func(r chi.Router) </span><span class="cov0" title="0">{
+                r.Post("/api/auth", authHandler.Auth)
+                r.Get("/swagger/*", httpSwagger.WrapHandler)
+        }</span>)
+
+        <span class="cov0" title="0">r.Group(func(r chi.Router) </span><span class="cov0" title="0">{
+                r.Use(jwtauth.Verifier(server.jwtAuth))
+                r.Use(middleware.Authenticator(server.jwtAuth))
+
+                r.Get("/api/info", userHandler.Info)
+                r.Get("/api/buy/{item}", purchaseHandler.Purchase)
+                r.Post("/api/sendCoin", coinHandler.SendCoin)
+        }</span>)
+
+        <span class="cov0" title="0">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package usecase
+
+import (
+        "context"
+        "errors"
+        "log/slog"
+
+        "github.com/go-chi/jwtauth/v5"
+        "github.com/jackc/pgx/v5"
+        errInt "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/models"
+        "github.com/pvpender/avito-shop/internal/usecase/user"
+        "golang.org/x/crypto/bcrypt"
+)
+
+type AuthUseCase struct {
+        jwtAuth *jwtauth.JWTAuth
+        user.UserRepository
+        logger *slog.Logger
+}
+
+func NewAuthUseCase(jwtAuth *jwtauth.JWTAuth, userRepository user.UserRepository, logger *slog.Logger) *AuthUseCase <span class="cov0" title="0">{
+        return &amp;AuthUseCase{jwtAuth: jwtAuth, UserRepository: userRepository, logger: logger}
+}</span>
+
+func (auc *AuthUseCase) Authenticate(ctx context.Context, request *models.AuthRequest) (*models.AuthResponse, error) <span class="cov0" title="0">{
+        if request == nil </span><span class="cov0" title="0">{
+                return nil, &amp;errInt.NilPointerError{}
+        }</span>
+
+        <span class="cov0" title="0">authUser, err := auc.UserRepository.GetUserByUsername(ctx, request.Username)
+        if errors.Is(err, pgx.ErrNoRows) </span><span class="cov0" title="0">{
+                hashPass, uErr := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
+                if uErr != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+
+                <span class="cov0" title="0">request.Password = string(hashPass)
+
+                id, uErr := auc.CreateUser(ctx, request)
+                if uErr != nil </span><span class="cov0" title="0">{
+                        return nil, uErr
+                }</span>
+
+                <span class="cov0" title="0">_, tokenAuth, uErr := auc.jwtAuth.Encode(map[string]interface{}{"user_id": id})
+                if uErr != nil </span><span class="cov0" title="0">{
+                        return nil, uErr
+                }</span>
+
+                <span class="cov0" title="0">return &amp;models.AuthResponse{Token: tokenAuth}, nil</span>
+        }
+
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">if auc.CheckPasswordHash(request.Password, authUser.Password) </span><span class="cov0" title="0">{
+                _, tokenAuth, uErr := auc.jwtAuth.Encode(map[string]interface{}{"user_id": authUser.UserId})
+                if uErr != nil </span><span class="cov0" title="0">{
+                        return nil, uErr
+                }</span>
+
+                <span class="cov0" title="0">return &amp;models.AuthResponse{Token: tokenAuth}, nil</span>
+        }
+
+        <span class="cov0" title="0">return nil, &amp;errInt.InvalidCredentialsError{}</span>
+}
+
+func (auc *AuthUseCase) CheckPasswordHash(password, hash string) bool <span class="cov0" title="0">{
+        err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+        return err == nil
+}</span>
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+// Source: deps.go
+//
+// Generated by this command:
+//
+//        mockgen --source=deps.go --destination=mocks/mock.go
+//
+
+// Package mock_auth is a generated GoMock package.
+package mock_auth
+
+import (
+        context "context"
+        reflect "reflect"
+
+        models "github.com/pvpender/avito-shop/internal/models"
+        gomock "go.uber.org/mock/gomock"
+)
+
+// MockAuthUseCase is a mock of AuthUseCase interface.
+type MockAuthUseCase struct {
+        ctrl     *gomock.Controller
+        recorder *MockAuthUseCaseMockRecorder
+        isgomock struct{}
+}
+
+// MockAuthUseCaseMockRecorder is the mock recorder for MockAuthUseCase.
+type MockAuthUseCaseMockRecorder struct {
+        mock *MockAuthUseCase
+}
+
+// NewMockAuthUseCase creates a new mock instance.
+func NewMockAuthUseCase(ctrl *gomock.Controller) *MockAuthUseCase <span class="cov8" title="1">{
+        mock := &amp;MockAuthUseCase{ctrl: ctrl}
+        mock.recorder = &amp;MockAuthUseCaseMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockAuthUseCase) EXPECT() *MockAuthUseCaseMockRecorder <span class="cov8" title="1">{
+        return m.recorder
+}</span>
+
+// Authenticate mocks base method.
+func (m *MockAuthUseCase) Authenticate(ctx context.Context, request *models.AuthRequest) (*models.AuthResponse, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "Authenticate", ctx, request)
+        ret0, _ := ret[0].(*models.AuthResponse)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// Authenticate indicates an expected call of Authenticate.
+func (mr *MockAuthUseCaseMockRecorder) Authenticate(ctx, request any) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Authenticate", reflect.TypeOf((*MockAuthUseCase)(nil).Authenticate), ctx, request)
+}</span>
+
+// CheckPasswordHash mocks base method.
+func (m *MockAuthUseCase) CheckPasswordHash(password, hash string) bool <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "CheckPasswordHash", password, hash)
+        ret0, _ := ret[0].(bool)
+        return ret0
+}</span>
+
+// CheckPasswordHash indicates an expected call of CheckPasswordHash.
+func (mr *MockAuthUseCaseMockRecorder) CheckPasswordHash(password, hash any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckPasswordHash", reflect.TypeOf((*MockAuthUseCase)(nil).CheckPasswordHash), password, hash)
+}</span>
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package usecase
+
+import (
+        "context"
+
+        "github.com/avito-tech/go-transaction-manager/trm/v2/manager"
+        "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/models"
+        "github.com/pvpender/avito-shop/internal/usecase/coin"
+        "github.com/pvpender/avito-shop/internal/usecase/user"
+)
+
+type CoinUseCase struct {
+        trManager *manager.Manager
+        coin.CoinRepository
+        user.UserRepository
+}
+
+func NewCoinUseCase(
+        trManager *manager.Manager,
+        userRepository user.UserRepository,
+        coinRepository coin.CoinRepository,
+) *CoinUseCase <span class="cov0" title="0">{
+        return &amp;CoinUseCase{
+                trManager:      trManager,
+                UserRepository: userRepository,
+                CoinRepository: coinRepository,
+        }
+}</span>
+
+func (c *CoinUseCase) SendCoin(ctx context.Context, userId uint32, request *models.SendCoinRequest) error <span class="cov0" title="0">{
+        if request == nil </span><span class="cov0" title="0">{
+                return &amp;errors.NilPointerError{}
+        }</span>
+
+        <span class="cov0" title="0">currentUser, err := c.UserRepository.GetUserById(ctx, userId)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">receiver, err := c.UserRepository.GetUserByUsername(ctx, request.ToUser)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">var newAmount int32 = currentUser.Coins - request.Amount
+        if newAmount &lt; 0 </span><span class="cov0" title="0">{
+                return &amp;errors.InvalidAmountError{}
+        }</span>
+
+        <span class="cov0" title="0">transmission, err := models.CreateCoinOperationWithIds(currentUser.UserId, receiver.UserId, request.Amount)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">err = c.trManager.Do(ctx, func(ctx context.Context) error </span><span class="cov0" title="0">{
+                trErr := c.UserRepository.UpdateUserCoins(ctx, currentUser.UserId, newAmount)
+                if trErr != nil </span><span class="cov0" title="0">{
+                        return trErr
+                }</span>
+
+                <span class="cov0" title="0">trErr = c.UserRepository.UpdateUserCoins(ctx, receiver.UserId, request.Amount+request.Amount)
+                if trErr != nil </span><span class="cov0" title="0">{
+                        return trErr
+                }</span>
+
+                <span class="cov0" title="0">_, trErr = c.CoinRepository.CreateTransmission(ctx, transmission)
+                if trErr != nil </span><span class="cov0" title="0">{
+                        return trErr
+                }</span>
+
+                <span class="cov0" title="0">return nil</span>
+        })
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file25" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+// Source: deps.go
+//
+// Generated by this command:
+//
+//        mockgen --source=deps.go --destination=mocks/mock.go
+//
+
+// Package mock_coin is a generated GoMock package.
+package mock_coin
+
+import (
+        context "context"
+        reflect "reflect"
+
+        models "github.com/pvpender/avito-shop/internal/models"
+        coin "github.com/pvpender/avito-shop/internal/usecase/coin"
+        gomock "go.uber.org/mock/gomock"
+)
+
+// MockCoinRepository is a mock of CoinRepository interface.
+type MockCoinRepository struct {
+        ctrl     *gomock.Controller
+        recorder *MockCoinRepositoryMockRecorder
+        isgomock struct{}
+}
+
+// MockCoinRepositoryMockRecorder is the mock recorder for MockCoinRepository.
+type MockCoinRepositoryMockRecorder struct {
+        mock *MockCoinRepository
+}
+
+// NewMockCoinRepository creates a new mock instance.
+func NewMockCoinRepository(ctrl *gomock.Controller) *MockCoinRepository <span class="cov0" title="0">{
+        mock := &amp;MockCoinRepository{ctrl: ctrl}
+        mock.recorder = &amp;MockCoinRepositoryMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCoinRepository) EXPECT() *MockCoinRepositoryMockRecorder <span class="cov0" title="0">{
+        return m.recorder
+}</span>
+
+// CreateTransmission mocks base method.
+func (m *MockCoinRepository) CreateTransmission(ctx context.Context, request *models.CoinOperationWithIds) (int32, error) <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "CreateTransmission", ctx, request)
+        ret0, _ := ret[0].(int32)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// CreateTransmission indicates an expected call of CreateTransmission.
+func (mr *MockCoinRepositoryMockRecorder) CreateTransmission(ctx, request any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTransmission", reflect.TypeOf((*MockCoinRepository)(nil).CreateTransmission), ctx, request)
+}</span>
+
+// GetUserTransmissions mocks base method.
+func (m *MockCoinRepository) GetUserTransmissions(ctx context.Context, userId uint32, transmissionType coin.TransmissionType) ([]*models.CoinOperationWithUsernames, error) <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "GetUserTransmissions", ctx, userId, transmissionType)
+        ret0, _ := ret[0].([]*models.CoinOperationWithUsernames)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// GetUserTransmissions indicates an expected call of GetUserTransmissions.
+func (mr *MockCoinRepositoryMockRecorder) GetUserTransmissions(ctx, userId, transmissionType any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserTransmissions", reflect.TypeOf((*MockCoinRepository)(nil).GetUserTransmissions), ctx, userId, transmissionType)
+}</span>
+
+// MockCoinUseCase is a mock of CoinUseCase interface.
+type MockCoinUseCase struct {
+        ctrl     *gomock.Controller
+        recorder *MockCoinUseCaseMockRecorder
+        isgomock struct{}
+}
+
+// MockCoinUseCaseMockRecorder is the mock recorder for MockCoinUseCase.
+type MockCoinUseCaseMockRecorder struct {
+        mock *MockCoinUseCase
+}
+
+// NewMockCoinUseCase creates a new mock instance.
+func NewMockCoinUseCase(ctrl *gomock.Controller) *MockCoinUseCase <span class="cov8" title="1">{
+        mock := &amp;MockCoinUseCase{ctrl: ctrl}
+        mock.recorder = &amp;MockCoinUseCaseMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCoinUseCase) EXPECT() *MockCoinUseCaseMockRecorder <span class="cov8" title="1">{
+        return m.recorder
+}</span>
+
+// SendCoin mocks base method.
+func (m *MockCoinUseCase) SendCoin(ctx context.Context, userId uint32, request *models.SendCoinRequest) error <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "SendCoin", ctx, userId, request)
+        ret0, _ := ret[0].(error)
+        return ret0
+}</span>
+
+// SendCoin indicates an expected call of SendCoin.
+func (mr *MockCoinUseCaseMockRecorder) SendCoin(ctx, userId, request any) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendCoin", reflect.TypeOf((*MockCoinUseCase)(nil).SendCoin), ctx, userId, request)
+}</span>
+</pre>
+		
+		<pre class="file" id="file26" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+// Source: deps.go
+//
+// Generated by this command:
+//
+//        mockgen --source=deps.go --destination=mocks/mock.go
+//
+
+// Package mock_item is a generated GoMock package.
+package mock_item
+
+import (
+        context "context"
+        reflect "reflect"
+
+        models "github.com/pvpender/avito-shop/internal/models"
+        gomock "go.uber.org/mock/gomock"
+)
+
+// MockItemRepository is a mock of ItemRepository interface.
+type MockItemRepository struct {
+        ctrl     *gomock.Controller
+        recorder *MockItemRepositoryMockRecorder
+        isgomock struct{}
+}
+
+// MockItemRepositoryMockRecorder is the mock recorder for MockItemRepository.
+type MockItemRepositoryMockRecorder struct {
+        mock *MockItemRepository
+}
+
+// NewMockItemRepository creates a new mock instance.
+func NewMockItemRepository(ctrl *gomock.Controller) *MockItemRepository <span class="cov0" title="0">{
+        mock := &amp;MockItemRepository{ctrl: ctrl}
+        mock.recorder = &amp;MockItemRepositoryMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockItemRepository) EXPECT() *MockItemRepositoryMockRecorder <span class="cov0" title="0">{
+        return m.recorder
+}</span>
+
+// GetItemByType mocks base method.
+func (m *MockItemRepository) GetItemByType(ctx context.Context, itemType string) (*models.Purchase, error) <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "GetItemByType", ctx, itemType)
+        ret0, _ := ret[0].(*models.Purchase)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// GetItemByType indicates an expected call of GetItemByType.
+func (mr *MockItemRepositoryMockRecorder) GetItemByType(ctx, itemType any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItemByType", reflect.TypeOf((*MockItemRepository)(nil).GetItemByType), ctx, itemType)
+}</span>
+</pre>
+		
+		<pre class="file" id="file27" style="display: none">package usecase
+
+import (
+        "context"
+
+        "github.com/avito-tech/go-transaction-manager/trm/v2/manager"
+        "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/usecase/item"
+        "github.com/pvpender/avito-shop/internal/usecase/purchase"
+        "github.com/pvpender/avito-shop/internal/usecase/user"
+)
+
+type PurchaseUseCase struct {
+        trManager *manager.Manager
+        purchase.PurchaseRepository
+        user.UserRepository
+        item.ItemRepository
+}
+
+func NewPurchaseUseCase(
+        trManager *manager.Manager,
+        purchaseRepository purchase.PurchaseRepository,
+        userRepository user.UserRepository,
+        itemRepository item.ItemRepository,
+) *PurchaseUseCase <span class="cov0" title="0">{
+        return &amp;PurchaseUseCase{
+                trManager:          trManager,
+                PurchaseRepository: purchaseRepository,
+                UserRepository:     userRepository,
+                ItemRepository:     itemRepository,
+        }
+}</span>
+
+func (p PurchaseUseCase) CreatePurchase(ctx context.Context, userId uint32, itemType string) error <span class="cov0" title="0">{
+        purchasedItem, err := p.ItemRepository.GetItemByType(ctx, itemType)
+        if purchasedItem == nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">updatableUser, err := p.UserRepository.GetUserById(ctx, userId)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">newAmount := updatableUser.Coins - purchasedItem.Price
+        if newAmount &lt; 0 </span><span class="cov0" title="0">{
+                return &amp;errors.PurchaseError{}
+        }</span>
+
+        <span class="cov0" title="0">err = p.trManager.Do(ctx, func(ctx context.Context) error </span><span class="cov0" title="0">{
+                if _, errTr := p.PurchaseRepository.CreatePurchase(ctx, userId, purchasedItem.ItemId); err != nil </span><span class="cov0" title="0">{
+                        return errTr
+                }</span>
+
+                <span class="cov0" title="0">if errTr := p.UserRepository.UpdateUserCoins(ctx, userId, newAmount); err != nil </span><span class="cov0" title="0">{
+                        return errTr
+                }</span>
+
+                <span class="cov0" title="0">return nil</span>
+        })
+
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file28" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+// Source: deps.go
+//
+// Generated by this command:
+//
+//        mockgen --source=deps.go --destination=mocks/mock.go
+//
+
+// Package mock_purchase is a generated GoMock package.
+package mock_purchase
+
+import (
+        context "context"
+        reflect "reflect"
+
+        models "github.com/pvpender/avito-shop/internal/models"
+        gomock "go.uber.org/mock/gomock"
+)
+
+// MockPurchaseRepository is a mock of PurchaseRepository interface.
+type MockPurchaseRepository struct {
+        ctrl     *gomock.Controller
+        recorder *MockPurchaseRepositoryMockRecorder
+        isgomock struct{}
+}
+
+// MockPurchaseRepositoryMockRecorder is the mock recorder for MockPurchaseRepository.
+type MockPurchaseRepositoryMockRecorder struct {
+        mock *MockPurchaseRepository
+}
+
+// NewMockPurchaseRepository creates a new mock instance.
+func NewMockPurchaseRepository(ctrl *gomock.Controller) *MockPurchaseRepository <span class="cov0" title="0">{
+        mock := &amp;MockPurchaseRepository{ctrl: ctrl}
+        mock.recorder = &amp;MockPurchaseRepositoryMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockPurchaseRepository) EXPECT() *MockPurchaseRepositoryMockRecorder <span class="cov0" title="0">{
+        return m.recorder
+}</span>
+
+// CreatePurchase mocks base method.
+func (m *MockPurchaseRepository) CreatePurchase(ctx context.Context, userId, itemId uint32) (int32, error) <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "CreatePurchase", ctx, userId, itemId)
+        ret0, _ := ret[0].(int32)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// CreatePurchase indicates an expected call of CreatePurchase.
+func (mr *MockPurchaseRepositoryMockRecorder) CreatePurchase(ctx, userId, itemId any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePurchase", reflect.TypeOf((*MockPurchaseRepository)(nil).CreatePurchase), ctx, userId, itemId)
+}</span>
+
+// GetUserPurchases mocks base method.
+func (m *MockPurchaseRepository) GetUserPurchases(ctx context.Context, userId uint32) ([]*models.Item, error) <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "GetUserPurchases", ctx, userId)
+        ret0, _ := ret[0].([]*models.Item)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// GetUserPurchases indicates an expected call of GetUserPurchases.
+func (mr *MockPurchaseRepositoryMockRecorder) GetUserPurchases(ctx, userId any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserPurchases", reflect.TypeOf((*MockPurchaseRepository)(nil).GetUserPurchases), ctx, userId)
+}</span>
+
+// MockPurchaseUseCase is a mock of PurchaseUseCase interface.
+type MockPurchaseUseCase struct {
+        ctrl     *gomock.Controller
+        recorder *MockPurchaseUseCaseMockRecorder
+        isgomock struct{}
+}
+
+// MockPurchaseUseCaseMockRecorder is the mock recorder for MockPurchaseUseCase.
+type MockPurchaseUseCaseMockRecorder struct {
+        mock *MockPurchaseUseCase
+}
+
+// NewMockPurchaseUseCase creates a new mock instance.
+func NewMockPurchaseUseCase(ctrl *gomock.Controller) *MockPurchaseUseCase <span class="cov8" title="1">{
+        mock := &amp;MockPurchaseUseCase{ctrl: ctrl}
+        mock.recorder = &amp;MockPurchaseUseCaseMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockPurchaseUseCase) EXPECT() *MockPurchaseUseCaseMockRecorder <span class="cov8" title="1">{
+        return m.recorder
+}</span>
+
+// CreatePurchase mocks base method.
+func (m *MockPurchaseUseCase) CreatePurchase(ctx context.Context, userId uint32, itemType string) error <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "CreatePurchase", ctx, userId, itemType)
+        ret0, _ := ret[0].(error)
+        return ret0
+}</span>
+
+// CreatePurchase indicates an expected call of CreatePurchase.
+func (mr *MockPurchaseUseCaseMockRecorder) CreatePurchase(ctx, userId, itemType any) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePurchase", reflect.TypeOf((*MockPurchaseUseCase)(nil).CreatePurchase), ctx, userId, itemType)
+}</span>
+</pre>
+		
+		<pre class="file" id="file29" style="display: none">package usecase
+
+import (
+        "context"
+
+        "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/models"
+        "github.com/pvpender/avito-shop/internal/usecase/coin"
+        "github.com/pvpender/avito-shop/internal/usecase/purchase"
+        "github.com/pvpender/avito-shop/internal/usecase/user"
+)
+
+type UserUseCase struct {
+        user.UserRepository
+        purchase.PurchaseRepository
+        coin.CoinRepository
+}
+
+func NewUserUseCase(
+        userRepository user.UserRepository,
+        purchaseRepository purchase.PurchaseRepository,
+        coinRepository coin.CoinRepository,
+) *UserUseCase <span class="cov0" title="0">{
+        return &amp;UserUseCase{
+                UserRepository:     userRepository,
+                PurchaseRepository: purchaseRepository,
+                CoinRepository:     coinRepository,
+        }
+}</span>
+
+func (u *UserUseCase) CreateUser(ctx context.Context, user *models.AuthRequest) error <span class="cov0" title="0">{
+        if user == nil </span><span class="cov0" title="0">{
+                return &amp;errors.NilPointerError{}
+        }</span>
+
+        <span class="cov0" title="0">_, err := u.UserRepository.CreateUser(ctx, user)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+func (u *UserUseCase) GetInfo(ctx context.Context, userId uint32) (*models.InfoResponse, error) <span class="cov0" title="0">{
+        currentUser, err := u.UserRepository.GetUserById(ctx, userId)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">items, err := u.PurchaseRepository.GetUserPurchases(ctx, userId)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">coinOperations, err := u.CoinRepository.GetUserTransmissions(ctx, userId, coin.Received)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">received := make([]*models.ReceivedCoin, len(coinOperations))
+        for i, coinOperation := range coinOperations </span><span class="cov0" title="0">{
+                received[i] = &amp;models.ReceivedCoin{FromUser: coinOperation.FromUser, Amount: coinOperation.Amount}
+        }</span>
+
+        <span class="cov0" title="0">coinOperations, err = u.CoinRepository.GetUserTransmissions(ctx, userId, coin.Sent)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">sent := make([]*models.SendCoinRequest, len(coinOperations))
+        for i, coinOperation := range coinOperations </span><span class="cov0" title="0">{
+                sent[i] = &amp;models.SendCoinRequest{ToUser: coinOperation.ToUser, Amount: coinOperation.Amount}
+        }</span>
+
+        <span class="cov0" title="0">history := &amp;models.CoinHistory{Received: received, Sent: sent}
+
+        return &amp;models.InfoResponse{Coins: currentUser.Coins, Inventory: items, CoinHistory: history}, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file30" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+// Source: deps.go
+//
+// Generated by this command:
+//
+//        mockgen --source=deps.go --destination=mocks/mock.go
+//
+
+// Package mock_user is a generated GoMock package.
+package mock_user
+
+import (
+        context "context"
+        reflect "reflect"
+
+        models "github.com/pvpender/avito-shop/internal/models"
+        gomock "go.uber.org/mock/gomock"
+)
+
+// MockUserRepository is a mock of UserRepository interface.
+type MockUserRepository struct {
+        ctrl     *gomock.Controller
+        recorder *MockUserRepositoryMockRecorder
+        isgomock struct{}
+}
+
+// MockUserRepositoryMockRecorder is the mock recorder for MockUserRepository.
+type MockUserRepositoryMockRecorder struct {
+        mock *MockUserRepository
+}
+
+// NewMockUserRepository creates a new mock instance.
+func NewMockUserRepository(ctrl *gomock.Controller) *MockUserRepository <span class="cov0" title="0">{
+        mock := &amp;MockUserRepository{ctrl: ctrl}
+        mock.recorder = &amp;MockUserRepositoryMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockUserRepository) EXPECT() *MockUserRepositoryMockRecorder <span class="cov0" title="0">{
+        return m.recorder
+}</span>
+
+// CreateUser mocks base method.
+func (m *MockUserRepository) CreateUser(ctx context.Context, request *models.AuthRequest) (int32, error) <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "CreateUser", ctx, request)
+        ret0, _ := ret[0].(int32)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// CreateUser indicates an expected call of CreateUser.
+func (mr *MockUserRepositoryMockRecorder) CreateUser(ctx, request any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockUserRepository)(nil).CreateUser), ctx, request)
+}</span>
+
+// GetUserById mocks base method.
+func (m *MockUserRepository) GetUserById(ctx context.Context, userId uint32) (*models.User, error) <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "GetUserById", ctx, userId)
+        ret0, _ := ret[0].(*models.User)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// GetUserById indicates an expected call of GetUserById.
+func (mr *MockUserRepositoryMockRecorder) GetUserById(ctx, userId any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserById", reflect.TypeOf((*MockUserRepository)(nil).GetUserById), ctx, userId)
+}</span>
+
+// GetUserByUsername mocks base method.
+func (m *MockUserRepository) GetUserByUsername(ctx context.Context, username string) (*models.User, error) <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "GetUserByUsername", ctx, username)
+        ret0, _ := ret[0].(*models.User)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// GetUserByUsername indicates an expected call of GetUserByUsername.
+func (mr *MockUserRepositoryMockRecorder) GetUserByUsername(ctx, username any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByUsername", reflect.TypeOf((*MockUserRepository)(nil).GetUserByUsername), ctx, username)
+}</span>
+
+// UpdateUserCoins mocks base method.
+func (m *MockUserRepository) UpdateUserCoins(ctx context.Context, userId uint32, coins int32) error <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "UpdateUserCoins", ctx, userId, coins)
+        ret0, _ := ret[0].(error)
+        return ret0
+}</span>
+
+// UpdateUserCoins indicates an expected call of UpdateUserCoins.
+func (mr *MockUserRepositoryMockRecorder) UpdateUserCoins(ctx, userId, coins any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateUserCoins", reflect.TypeOf((*MockUserRepository)(nil).UpdateUserCoins), ctx, userId, coins)
+}</span>
+
+// MockUserUseCase is a mock of UserUseCase interface.
+type MockUserUseCase struct {
+        ctrl     *gomock.Controller
+        recorder *MockUserUseCaseMockRecorder
+        isgomock struct{}
+}
+
+// MockUserUseCaseMockRecorder is the mock recorder for MockUserUseCase.
+type MockUserUseCaseMockRecorder struct {
+        mock *MockUserUseCase
+}
+
+// NewMockUserUseCase creates a new mock instance.
+func NewMockUserUseCase(ctrl *gomock.Controller) *MockUserUseCase <span class="cov8" title="1">{
+        mock := &amp;MockUserUseCase{ctrl: ctrl}
+        mock.recorder = &amp;MockUserUseCaseMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockUserUseCase) EXPECT() *MockUserUseCaseMockRecorder <span class="cov8" title="1">{
+        return m.recorder
+}</span>
+
+// CreateUser mocks base method.
+func (m *MockUserUseCase) CreateUser(ctx context.Context, user *models.AuthRequest) error <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "CreateUser", ctx, user)
+        ret0, _ := ret[0].(error)
+        return ret0
+}</span>
+
+// CreateUser indicates an expected call of CreateUser.
+func (mr *MockUserUseCaseMockRecorder) CreateUser(ctx, user any) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockUserUseCase)(nil).CreateUser), ctx, user)
+}</span>
+
+// GetInfo mocks base method.
+func (m *MockUserUseCase) GetInfo(ctx context.Context, userId uint32) (*models.InfoResponse, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "GetInfo", ctx, userId)
+        ret0, _ := ret[0].(*models.InfoResponse)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// GetInfo indicates an expected call of GetInfo.
+func (mr *MockUserUseCaseMockRecorder) GetInfo(ctx, userId any) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInfo", reflect.TypeOf((*MockUserUseCase)(nil).GetInfo), ctx, userId)
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
