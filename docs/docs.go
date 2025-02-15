@@ -344,7 +344,7 @@ type swaggerInfo struct {
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
 	Host:        "localhost:8080",
-	BasePath:    "/api",
+	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "API Avito Shop",
 	Description: "",

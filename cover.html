@@ -99,7 +99,7 @@
 				
 				<option value="file21">github.com/pvpender/avito-shop/internal/server/server.go (0.0%)</option>
 				
-				<option value="file22">github.com/pvpender/avito-shop/internal/usecase/auth.go (0.0%)</option>
+				<option value="file22">github.com/pvpender/avito-shop/internal/usecase/auth.go (76.9%)</option>
 				
 				<option value="file23">github.com/pvpender/avito-shop/internal/usecase/auth/mocks/mock.go (64.7%)</option>
 				
@@ -115,7 +115,7 @@
 				
 				<option value="file29">github.com/pvpender/avito-shop/internal/usecase/user.go (0.0%)</option>
 				
-				<option value="file30">github.com/pvpender/avito-shop/internal/usecase/user/mocks/mock.go (22.9%)</option>
+				<option value="file30">github.com/pvpender/avito-shop/internal/usecase/user/mocks/mock.go (60.4%)</option>
 				
 				</select>
 			</div>
@@ -556,7 +556,7 @@ type swaggerInfo struct {
 var SwaggerInfo = swaggerInfo{
         Version:     "1.0",
         Host:        "localhost:8080",
-        BasePath:    "/api",
+        BasePath:    "/",
         Schemes:     []string{},
         Title:       "API Avito Shop",
         Description: "",
@@ -719,11 +719,12 @@ func (err ShutdownError) Error() string <span class="cov0" title="0">{
 import (
         "encoding/json"
         "errors"
+        "log/slog"
+        "net/http"
+
         errInt "github.com/pvpender/avito-shop/internal/errors"
         "github.com/pvpender/avito-shop/internal/models"
         "github.com/pvpender/avito-shop/internal/usecase/auth"
-        "log/slog"
-        "net/http"
 )
 
 type AuthHandler struct {
@@ -899,13 +900,14 @@ func getUserIdFromJwt(
 
 import (
         "errors"
+        "log/slog"
+        "net/http"
+
         "github.com/go-chi/chi/v5"
         "github.com/go-chi/jwtauth/v5"
         "github.com/jackc/pgx/v5"
         errInt "github.com/pvpender/avito-shop/internal/errors"
         "github.com/pvpender/avito-shop/internal/usecase/purchase"
-        "log/slog"
-        "net/http"
 )
 
 type PurchaseHandler struct {
@@ -1470,7 +1472,6 @@ func (p *PgUserRepository) UpdateUserCoins(ctx context.Context, userId uint32, c
 
 import (
         "context"
-        httpSwagger "github.com/swaggo/http-swagger"
         "log/slog"
         "net/http"
         "os"
@@ -1492,6 +1493,7 @@ import (
         "github.com/pvpender/avito-shop/internal/middleware"
         "github.com/pvpender/avito-shop/internal/repositories"
         "github.com/pvpender/avito-shop/internal/usecase"
+        httpSwagger "github.com/swaggo/http-swagger"
 )
 
 const (
@@ -1624,54 +1626,54 @@ type AuthUseCase struct {
         logger *slog.Logger
 }
 
-func NewAuthUseCase(jwtAuth *jwtauth.JWTAuth, userRepository user.UserRepository, logger *slog.Logger) *AuthUseCase <span class="cov0" title="0">{
+func NewAuthUseCase(jwtAuth *jwtauth.JWTAuth, userRepository user.UserRepository, logger *slog.Logger) *AuthUseCase <span class="cov8" title="1">{
         return &amp;AuthUseCase{jwtAuth: jwtAuth, UserRepository: userRepository, logger: logger}
 }</span>
 
-func (auc *AuthUseCase) Authenticate(ctx context.Context, request *models.AuthRequest) (*models.AuthResponse, error) <span class="cov0" title="0">{
+func (auc *AuthUseCase) Authenticate(ctx context.Context, request *models.AuthRequest) (*models.AuthResponse, error) <span class="cov8" title="1">{
         if request == nil </span><span class="cov0" title="0">{
                 return nil, &amp;errInt.NilPointerError{}
         }</span>
 
-        <span class="cov0" title="0">authUser, err := auc.UserRepository.GetUserByUsername(ctx, request.Username)
-        if errors.Is(err, pgx.ErrNoRows) </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">authUser, err := auc.UserRepository.GetUserByUsername(ctx, request.Username)
+        if errors.Is(err, pgx.ErrNoRows) </span><span class="cov8" title="1">{
                 hashPass, uErr := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
                 if uErr != nil </span><span class="cov0" title="0">{
                         return nil, err
                 }</span>
 
-                <span class="cov0" title="0">request.Password = string(hashPass)
+                <span class="cov8" title="1">request.Password = string(hashPass)
 
                 id, uErr := auc.CreateUser(ctx, request)
                 if uErr != nil </span><span class="cov0" title="0">{
                         return nil, uErr
                 }</span>
 
-                <span class="cov0" title="0">_, tokenAuth, uErr := auc.jwtAuth.Encode(map[string]interface{}{"user_id": id})
+                <span class="cov8" title="1">_, tokenAuth, uErr := auc.jwtAuth.Encode(map[string]interface{}{"user_id": id})
                 if uErr != nil </span><span class="cov0" title="0">{
                         return nil, uErr
                 }</span>
 
-                <span class="cov0" title="0">return &amp;models.AuthResponse{Token: tokenAuth}, nil</span>
+                <span class="cov8" title="1">return &amp;models.AuthResponse{Token: tokenAuth}, nil</span>
         }
 
-        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
 
-        <span class="cov0" title="0">if auc.CheckPasswordHash(request.Password, authUser.Password) </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">if auc.CheckPasswordHash(request.Password, authUser.Password) </span><span class="cov8" title="1">{
                 _, tokenAuth, uErr := auc.jwtAuth.Encode(map[string]interface{}{"user_id": authUser.UserId})
                 if uErr != nil </span><span class="cov0" title="0">{
                         return nil, uErr
                 }</span>
 
-                <span class="cov0" title="0">return &amp;models.AuthResponse{Token: tokenAuth}, nil</span>
+                <span class="cov8" title="1">return &amp;models.AuthResponse{Token: tokenAuth}, nil</span>
         }
 
-        <span class="cov0" title="0">return nil, &amp;errInt.InvalidCredentialsError{}</span>
+        <span class="cov8" title="1">return nil, &amp;errInt.InvalidCredentialsError{}</span>
 }
 
-func (auc *AuthUseCase) CheckPasswordHash(password, hash string) bool <span class="cov0" title="0">{
+func (auc *AuthUseCase) CheckPasswordHash(password, hash string) bool <span class="cov8" title="1">{
         err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
         return err == nil
 }</span>
@@ -2296,19 +2298,19 @@ type MockUserRepositoryMockRecorder struct {
 }
 
 // NewMockUserRepository creates a new mock instance.
-func NewMockUserRepository(ctrl *gomock.Controller) *MockUserRepository <span class="cov0" title="0">{
+func NewMockUserRepository(ctrl *gomock.Controller) *MockUserRepository <span class="cov8" title="1">{
         mock := &amp;MockUserRepository{ctrl: ctrl}
         mock.recorder = &amp;MockUserRepositoryMockRecorder{mock}
         return mock
 }</span>
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockUserRepository) EXPECT() *MockUserRepositoryMockRecorder <span class="cov0" title="0">{
+func (m *MockUserRepository) EXPECT() *MockUserRepositoryMockRecorder <span class="cov8" title="1">{
         return m.recorder
 }</span>
 
 // CreateUser mocks base method.
-func (m *MockUserRepository) CreateUser(ctx context.Context, request *models.AuthRequest) (int32, error) <span class="cov0" title="0">{
+func (m *MockUserRepository) CreateUser(ctx context.Context, request *models.AuthRequest) (int32, error) <span class="cov8" title="1">{
         m.ctrl.T.Helper()
         ret := m.ctrl.Call(m, "CreateUser", ctx, request)
         ret0, _ := ret[0].(int32)
@@ -2317,7 +2319,7 @@ func (m *MockUserRepository) CreateUser(ctx context.Context, request *models.Aut
 }</span>
 
 // CreateUser indicates an expected call of CreateUser.
-func (mr *MockUserRepositoryMockRecorder) CreateUser(ctx, request any) *gomock.Call <span class="cov0" title="0">{
+func (mr *MockUserRepositoryMockRecorder) CreateUser(ctx, request any) *gomock.Call <span class="cov8" title="1">{
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockUserRepository)(nil).CreateUser), ctx, request)
 }</span>
@@ -2338,7 +2340,7 @@ func (mr *MockUserRepositoryMockRecorder) GetUserById(ctx, userId any) *gomock.C
 }</span>
 
 // GetUserByUsername mocks base method.
-func (m *MockUserRepository) GetUserByUsername(ctx context.Context, username string) (*models.User, error) <span class="cov0" title="0">{
+func (m *MockUserRepository) GetUserByUsername(ctx context.Context, username string) (*models.User, error) <span class="cov8" title="1">{
         m.ctrl.T.Helper()
         ret := m.ctrl.Call(m, "GetUserByUsername", ctx, username)
         ret0, _ := ret[0].(*models.User)
@@ -2347,7 +2349,7 @@ func (m *MockUserRepository) GetUserByUsername(ctx context.Context, username str
 }</span>
 
 // GetUserByUsername indicates an expected call of GetUserByUsername.
-func (mr *MockUserRepositoryMockRecorder) GetUserByUsername(ctx, username any) *gomock.Call <span class="cov0" title="0">{
+func (mr *MockUserRepositoryMockRecorder) GetUserByUsername(ctx, username any) *gomock.Call <span class="cov8" title="1">{
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByUsername", reflect.TypeOf((*MockUserRepository)(nil).GetUserByUsername), ctx, username)
 }</span>
