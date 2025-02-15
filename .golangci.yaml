@@ -17,7 +17,6 @@ linters:
     - err113
     - errname
     - exptostd
-    - funlen
     - gci
     - gochecknoglobals
     - gocognit
