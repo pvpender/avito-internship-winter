@@ -2,23 +2,22 @@ package usecase
 
 import (
 	"context"
-
-	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
 	"github.com/pvpender/avito-shop/internal/errors"
+	"github.com/pvpender/avito-shop/internal/usecase/common"
 	"github.com/pvpender/avito-shop/internal/usecase/item"
 	"github.com/pvpender/avito-shop/internal/usecase/purchase"
 	"github.com/pvpender/avito-shop/internal/usecase/user"
 )
 
 type PurchaseUseCase struct {
-	trManager *manager.Manager
+	trManager common.TransactionManager
 	purchase.PurchaseRepository
 	user.UserRepository
 	item.ItemRepository
 }
 
 func NewPurchaseUseCase(
-	trManager *manager.Manager,
+	trManager common.TransactionManager,
 	purchaseRepository purchase.PurchaseRepository,
 	userRepository user.UserRepository,
 	itemRepository item.ItemRepository,
@@ -48,11 +47,11 @@ func (p PurchaseUseCase) CreatePurchase(ctx context.Context, userId uint32, item
 	}
 
 	err = p.trManager.Do(ctx, func(ctx context.Context) error {
-		if _, errTr := p.PurchaseRepository.CreatePurchase(ctx, userId, purchasedItem.ItemId); err != nil {
+		if _, errTr := p.PurchaseRepository.CreatePurchase(ctx, userId, purchasedItem.ItemId); errTr != nil {
 			return errTr
 		}
 
-		if errTr := p.UserRepository.UpdateUserCoins(ctx, userId, newAmount); err != nil {
+		if errTr := p.UserRepository.UpdateUserCoins(ctx, userId, newAmount); errTr != nil {
 			return errTr
 		}
 

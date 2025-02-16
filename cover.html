@@ -87,7 +87,7 @@
 				
 				<option value="file15">github.com/pvpender/avito-shop/internal/models/auth.go (100.0%)</option>
 				
-				<option value="file16">github.com/pvpender/avito-shop/internal/models/coins.go (50.0%)</option>
+				<option value="file16">github.com/pvpender/avito-shop/internal/models/coins.go (83.3%)</option>
 				
 				<option value="file17">github.com/pvpender/avito-shop/internal/repositories/coin.go (0.0%)</option>
 				
@@ -103,19 +103,21 @@
 				
 				<option value="file23">github.com/pvpender/avito-shop/internal/usecase/auth/mocks/mock.go (64.7%)</option>
 				
-				<option value="file24">github.com/pvpender/avito-shop/internal/usecase/coin.go (0.0%)</option>
+				<option value="file24">github.com/pvpender/avito-shop/internal/usecase/coin.go (79.3%)</option>
 				
-				<option value="file25">github.com/pvpender/avito-shop/internal/usecase/coin/mocks/mock.go (35.7%)</option>
+				<option value="file25">github.com/pvpender/avito-shop/internal/usecase/coin/mocks/mock.go (100.0%)</option>
 				
-				<option value="file26">github.com/pvpender/avito-shop/internal/usecase/item/mocks/mock.go (0.0%)</option>
+				<option value="file26">github.com/pvpender/avito-shop/internal/usecase/common/mocks/mock/mock.go (100.0%)</option>
 				
-				<option value="file27">github.com/pvpender/avito-shop/internal/usecase/purchase.go (0.0%)</option>
+				<option value="file27">github.com/pvpender/avito-shop/internal/usecase/item/mocks/mock.go (100.0%)</option>
 				
-				<option value="file28">github.com/pvpender/avito-shop/internal/usecase/purchase/mocks/mock.go (35.7%)</option>
+				<option value="file28">github.com/pvpender/avito-shop/internal/usecase/purchase.go (94.7%)</option>
 				
-				<option value="file29">github.com/pvpender/avito-shop/internal/usecase/user.go (0.0%)</option>
+				<option value="file29">github.com/pvpender/avito-shop/internal/usecase/purchase/mocks/mock.go (100.0%)</option>
 				
-				<option value="file30">github.com/pvpender/avito-shop/internal/usecase/user/mocks/mock.go (60.4%)</option>
+				<option value="file30">github.com/pvpender/avito-shop/internal/usecase/user.go (81.5%)</option>
+				
+				<option value="file31">github.com/pvpender/avito-shop/internal/usecase/user/mocks/mock.go (87.5%)</option>
 				
 				</select>
 			</div>
@@ -1078,12 +1080,12 @@ type CoinHistory struct {
         Sent     []*SendCoinRequest `json:"sent"`
 }
 
-func CreateCoinOperationWithIds(fromUser uint32, toUser uint32, amount int32) (*CoinOperationWithIds, error) <span class="cov0" title="0">{
+func CreateCoinOperationWithIds(fromUser uint32, toUser uint32, amount int32) (*CoinOperationWithIds, error) <span class="cov8" title="1">{
         if (fromUser == toUser) || amount &lt;= 0 </span><span class="cov0" title="0">{
                 return nil, &amp;errors.InvalidCoinOperationError{}
         }</span>
 
-        <span class="cov0" title="0">return &amp;CoinOperationWithIds{fromUser, toUser, amount}, nil</span>
+        <span class="cov8" title="1">return &amp;CoinOperationWithIds{fromUser, toUser, amount}, nil</span>
 }
 
 func (coinRequest *SendCoinRequest) Validate() bool <span class="cov8" title="1">{
@@ -1756,8 +1758,8 @@ func (mr *MockAuthUseCaseMockRecorder) CheckPasswordHash(password, hash any) *go
 
 import (
         "context"
+        "github.com/pvpender/avito-shop/internal/usecase/common"
 
-        "github.com/avito-tech/go-transaction-manager/trm/v2/manager"
         "github.com/pvpender/avito-shop/internal/errors"
         "github.com/pvpender/avito-shop/internal/models"
         "github.com/pvpender/avito-shop/internal/usecase/coin"
@@ -1765,16 +1767,16 @@ import (
 )
 
 type CoinUseCase struct {
-        trManager *manager.Manager
+        trManager common.TransactionManager
         coin.CoinRepository
         user.UserRepository
 }
 
 func NewCoinUseCase(
-        trManager *manager.Manager,
+        trManager common.TransactionManager,
         userRepository user.UserRepository,
         coinRepository coin.CoinRepository,
-) *CoinUseCase <span class="cov0" title="0">{
+) *CoinUseCase <span class="cov8" title="1">{
         return &amp;CoinUseCase{
                 trManager:      trManager,
                 UserRepository: userRepository,
@@ -1782,54 +1784,54 @@ func NewCoinUseCase(
         }
 }</span>
 
-func (c *CoinUseCase) SendCoin(ctx context.Context, userId uint32, request *models.SendCoinRequest) error <span class="cov0" title="0">{
+func (c *CoinUseCase) SendCoin(ctx context.Context, userId uint32, request *models.SendCoinRequest) error <span class="cov8" title="1">{
         if request == nil </span><span class="cov0" title="0">{
                 return &amp;errors.NilPointerError{}
         }</span>
 
-        <span class="cov0" title="0">currentUser, err := c.UserRepository.GetUserById(ctx, userId)
+        <span class="cov8" title="1">currentUser, err := c.UserRepository.GetUserById(ctx, userId)
         if err != nil </span><span class="cov0" title="0">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">receiver, err := c.UserRepository.GetUserByUsername(ctx, request.ToUser)
+        <span class="cov8" title="1">receiver, err := c.UserRepository.GetUserByUsername(ctx, request.ToUser)
         if err != nil </span><span class="cov0" title="0">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">var newAmount int32 = currentUser.Coins - request.Amount
-        if newAmount &lt; 0 </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">var newAmount int32 = currentUser.Coins - request.Amount
+        if newAmount &lt; 0 </span><span class="cov8" title="1">{
                 return &amp;errors.InvalidAmountError{}
         }</span>
 
-        <span class="cov0" title="0">transmission, err := models.CreateCoinOperationWithIds(currentUser.UserId, receiver.UserId, request.Amount)
+        <span class="cov8" title="1">transmission, err := models.CreateCoinOperationWithIds(currentUser.UserId, receiver.UserId, request.Amount)
         if err != nil </span><span class="cov0" title="0">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">err = c.trManager.Do(ctx, func(ctx context.Context) error </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">err = c.trManager.Do(ctx, func(ctx context.Context) error </span><span class="cov8" title="1">{
                 trErr := c.UserRepository.UpdateUserCoins(ctx, currentUser.UserId, newAmount)
+                if trErr != nil </span><span class="cov8" title="1">{
+                        return trErr
+                }</span>
+
+                <span class="cov8" title="1">trErr = c.UserRepository.UpdateUserCoins(ctx, receiver.UserId, receiver.Coins+request.Amount)
                 if trErr != nil </span><span class="cov0" title="0">{
                         return trErr
                 }</span>
 
-                <span class="cov0" title="0">trErr = c.UserRepository.UpdateUserCoins(ctx, receiver.UserId, request.Amount+request.Amount)
+                <span class="cov8" title="1">_, trErr = c.CoinRepository.CreateTransmission(ctx, transmission)
                 if trErr != nil </span><span class="cov0" title="0">{
                         return trErr
                 }</span>
 
-                <span class="cov0" title="0">_, trErr = c.CoinRepository.CreateTransmission(ctx, transmission)
-                if trErr != nil </span><span class="cov0" title="0">{
-                        return trErr
-                }</span>
-
-                <span class="cov0" title="0">return nil</span>
+                <span class="cov8" title="1">return nil</span>
         })
-        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">if err != nil </span><span class="cov8" title="1">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">return nil</span>
+        <span class="cov8" title="1">return nil</span>
 }
 </pre>
 		
@@ -1866,19 +1868,19 @@ type MockCoinRepositoryMockRecorder struct {
 }
 
 // NewMockCoinRepository creates a new mock instance.
-func NewMockCoinRepository(ctrl *gomock.Controller) *MockCoinRepository <span class="cov0" title="0">{
+func NewMockCoinRepository(ctrl *gomock.Controller) *MockCoinRepository <span class="cov8" title="1">{
         mock := &amp;MockCoinRepository{ctrl: ctrl}
         mock.recorder = &amp;MockCoinRepositoryMockRecorder{mock}
         return mock
 }</span>
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockCoinRepository) EXPECT() *MockCoinRepositoryMockRecorder <span class="cov0" title="0">{
+func (m *MockCoinRepository) EXPECT() *MockCoinRepositoryMockRecorder <span class="cov8" title="1">{
         return m.recorder
 }</span>
 
 // CreateTransmission mocks base method.
-func (m *MockCoinRepository) CreateTransmission(ctx context.Context, request *models.CoinOperationWithIds) (int32, error) <span class="cov0" title="0">{
+func (m *MockCoinRepository) CreateTransmission(ctx context.Context, request *models.CoinOperationWithIds) (int32, error) <span class="cov8" title="1">{
         m.ctrl.T.Helper()
         ret := m.ctrl.Call(m, "CreateTransmission", ctx, request)
         ret0, _ := ret[0].(int32)
@@ -1887,13 +1889,13 @@ func (m *MockCoinRepository) CreateTransmission(ctx context.Context, request *mo
 }</span>
 
 // CreateTransmission indicates an expected call of CreateTransmission.
-func (mr *MockCoinRepositoryMockRecorder) CreateTransmission(ctx, request any) *gomock.Call <span class="cov0" title="0">{
+func (mr *MockCoinRepositoryMockRecorder) CreateTransmission(ctx, request any) *gomock.Call <span class="cov8" title="1">{
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTransmission", reflect.TypeOf((*MockCoinRepository)(nil).CreateTransmission), ctx, request)
 }</span>
 
 // GetUserTransmissions mocks base method.
-func (m *MockCoinRepository) GetUserTransmissions(ctx context.Context, userId uint32, transmissionType coin.TransmissionType) ([]*models.CoinOperationWithUsernames, error) <span class="cov0" title="0">{
+func (m *MockCoinRepository) GetUserTransmissions(ctx context.Context, userId uint32, transmissionType coin.TransmissionType) ([]*models.CoinOperationWithUsernames, error) <span class="cov8" title="1">{
         m.ctrl.T.Helper()
         ret := m.ctrl.Call(m, "GetUserTransmissions", ctx, userId, transmissionType)
         ret0, _ := ret[0].([]*models.CoinOperationWithUsernames)
@@ -1902,7 +1904,7 @@ func (m *MockCoinRepository) GetUserTransmissions(ctx context.Context, userId ui
 }</span>
 
 // GetUserTransmissions indicates an expected call of GetUserTransmissions.
-func (mr *MockCoinRepositoryMockRecorder) GetUserTransmissions(ctx, userId, transmissionType any) *gomock.Call <span class="cov0" title="0">{
+func (mr *MockCoinRepositoryMockRecorder) GetUserTransmissions(ctx, userId, transmissionType any) *gomock.Call <span class="cov8" title="1">{
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserTransmissions", reflect.TypeOf((*MockCoinRepository)(nil).GetUserTransmissions), ctx, userId, transmissionType)
 }</span>
@@ -1946,7 +1948,23 @@ func (mr *MockCoinUseCaseMockRecorder) SendCoin(ctx, userId, request any) *gomoc
 }</span>
 </pre>
 		
-		<pre class="file" id="file26" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+		<pre class="file" id="file26" style="display: none">package mock
+
+import "context"
+
+type MockTransactionManager struct {
+}
+
+func (m MockTransactionManager) Do(ctx context.Context, fn func(ctx context.Context) error) (err error) <span class="cov8" title="1">{
+        if err = fn(ctx); err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file27" style="display: none">// Code generated by MockGen. DO NOT EDIT.
 // Source: deps.go
 //
 // Generated by this command:
@@ -1978,19 +1996,19 @@ type MockItemRepositoryMockRecorder struct {
 }
 
 // NewMockItemRepository creates a new mock instance.
-func NewMockItemRepository(ctrl *gomock.Controller) *MockItemRepository <span class="cov0" title="0">{
+func NewMockItemRepository(ctrl *gomock.Controller) *MockItemRepository <span class="cov8" title="1">{
         mock := &amp;MockItemRepository{ctrl: ctrl}
         mock.recorder = &amp;MockItemRepositoryMockRecorder{mock}
         return mock
 }</span>
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockItemRepository) EXPECT() *MockItemRepositoryMockRecorder <span class="cov0" title="0">{
+func (m *MockItemRepository) EXPECT() *MockItemRepositoryMockRecorder <span class="cov8" title="1">{
         return m.recorder
 }</span>
 
 // GetItemByType mocks base method.
-func (m *MockItemRepository) GetItemByType(ctx context.Context, itemType string) (*models.Purchase, error) <span class="cov0" title="0">{
+func (m *MockItemRepository) GetItemByType(ctx context.Context, itemType string) (*models.Purchase, error) <span class="cov8" title="1">{
         m.ctrl.T.Helper()
         ret := m.ctrl.Call(m, "GetItemByType", ctx, itemType)
         ret0, _ := ret[0].(*models.Purchase)
@@ -1999,37 +2017,36 @@ func (m *MockItemRepository) GetItemByType(ctx context.Context, itemType string)
 }</span>
 
 // GetItemByType indicates an expected call of GetItemByType.
-func (mr *MockItemRepositoryMockRecorder) GetItemByType(ctx, itemType any) *gomock.Call <span class="cov0" title="0">{
+func (mr *MockItemRepositoryMockRecorder) GetItemByType(ctx, itemType any) *gomock.Call <span class="cov8" title="1">{
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItemByType", reflect.TypeOf((*MockItemRepository)(nil).GetItemByType), ctx, itemType)
 }</span>
 </pre>
 		
-		<pre class="file" id="file27" style="display: none">package usecase
+		<pre class="file" id="file28" style="display: none">package usecase
 
 import (
         "context"
-
-        "github.com/avito-tech/go-transaction-manager/trm/v2/manager"
         "github.com/pvpender/avito-shop/internal/errors"
+        "github.com/pvpender/avito-shop/internal/usecase/common"
         "github.com/pvpender/avito-shop/internal/usecase/item"
         "github.com/pvpender/avito-shop/internal/usecase/purchase"
         "github.com/pvpender/avito-shop/internal/usecase/user"
 )
 
 type PurchaseUseCase struct {
-        trManager *manager.Manager
+        trManager common.TransactionManager
         purchase.PurchaseRepository
         user.UserRepository
         item.ItemRepository
 }
 
 func NewPurchaseUseCase(
-        trManager *manager.Manager,
+        trManager common.TransactionManager,
         purchaseRepository purchase.PurchaseRepository,
         userRepository user.UserRepository,
         itemRepository item.ItemRepository,
-) *PurchaseUseCase <span class="cov0" title="0">{
+) *PurchaseUseCase <span class="cov8" title="1">{
         return &amp;PurchaseUseCase{
                 trManager:          trManager,
                 PurchaseRepository: purchaseRepository,
@@ -2038,43 +2055,43 @@ func NewPurchaseUseCase(
         }
 }</span>
 
-func (p PurchaseUseCase) CreatePurchase(ctx context.Context, userId uint32, itemType string) error <span class="cov0" title="0">{
+func (p PurchaseUseCase) CreatePurchase(ctx context.Context, userId uint32, itemType string) error <span class="cov8" title="1">{
         purchasedItem, err := p.ItemRepository.GetItemByType(ctx, itemType)
-        if purchasedItem == nil </span><span class="cov0" title="0">{
+        if purchasedItem == nil </span><span class="cov8" title="1">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">updatableUser, err := p.UserRepository.GetUserById(ctx, userId)
-        if err != nil </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">updatableUser, err := p.UserRepository.GetUserById(ctx, userId)
+        if err != nil </span><span class="cov8" title="1">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">newAmount := updatableUser.Coins - purchasedItem.Price
-        if newAmount &lt; 0 </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">newAmount := updatableUser.Coins - purchasedItem.Price
+        if newAmount &lt; 0 </span><span class="cov8" title="1">{
                 return &amp;errors.PurchaseError{}
         }</span>
 
-        <span class="cov0" title="0">err = p.trManager.Do(ctx, func(ctx context.Context) error </span><span class="cov0" title="0">{
-                if _, errTr := p.PurchaseRepository.CreatePurchase(ctx, userId, purchasedItem.ItemId); err != nil </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">err = p.trManager.Do(ctx, func(ctx context.Context) error </span><span class="cov8" title="1">{
+                if _, errTr := p.PurchaseRepository.CreatePurchase(ctx, userId, purchasedItem.ItemId); errTr != nil </span><span class="cov0" title="0">{
                         return errTr
                 }</span>
 
-                <span class="cov0" title="0">if errTr := p.UserRepository.UpdateUserCoins(ctx, userId, newAmount); err != nil </span><span class="cov0" title="0">{
+                <span class="cov8" title="1">if errTr := p.UserRepository.UpdateUserCoins(ctx, userId, newAmount); errTr != nil </span><span class="cov8" title="1">{
                         return errTr
                 }</span>
 
-                <span class="cov0" title="0">return nil</span>
+                <span class="cov8" title="1">return nil</span>
         })
 
-        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">if err != nil </span><span class="cov8" title="1">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">return nil</span>
+        <span class="cov8" title="1">return nil</span>
 }
 </pre>
 		
-		<pre class="file" id="file28" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+		<pre class="file" id="file29" style="display: none">// Code generated by MockGen. DO NOT EDIT.
 // Source: deps.go
 //
 // Generated by this command:
@@ -2106,19 +2123,19 @@ type MockPurchaseRepositoryMockRecorder struct {
 }
 
 // NewMockPurchaseRepository creates a new mock instance.
-func NewMockPurchaseRepository(ctrl *gomock.Controller) *MockPurchaseRepository <span class="cov0" title="0">{
+func NewMockPurchaseRepository(ctrl *gomock.Controller) *MockPurchaseRepository <span class="cov8" title="1">{
         mock := &amp;MockPurchaseRepository{ctrl: ctrl}
         mock.recorder = &amp;MockPurchaseRepositoryMockRecorder{mock}
         return mock
 }</span>
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockPurchaseRepository) EXPECT() *MockPurchaseRepositoryMockRecorder <span class="cov0" title="0">{
+func (m *MockPurchaseRepository) EXPECT() *MockPurchaseRepositoryMockRecorder <span class="cov8" title="1">{
         return m.recorder
 }</span>
 
 // CreatePurchase mocks base method.
-func (m *MockPurchaseRepository) CreatePurchase(ctx context.Context, userId, itemId uint32) (int32, error) <span class="cov0" title="0">{
+func (m *MockPurchaseRepository) CreatePurchase(ctx context.Context, userId, itemId uint32) (int32, error) <span class="cov8" title="1">{
         m.ctrl.T.Helper()
         ret := m.ctrl.Call(m, "CreatePurchase", ctx, userId, itemId)
         ret0, _ := ret[0].(int32)
@@ -2127,13 +2144,13 @@ func (m *MockPurchaseRepository) CreatePurchase(ctx context.Context, userId, ite
 }</span>
 
 // CreatePurchase indicates an expected call of CreatePurchase.
-func (mr *MockPurchaseRepositoryMockRecorder) CreatePurchase(ctx, userId, itemId any) *gomock.Call <span class="cov0" title="0">{
+func (mr *MockPurchaseRepositoryMockRecorder) CreatePurchase(ctx, userId, itemId any) *gomock.Call <span class="cov8" title="1">{
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePurchase", reflect.TypeOf((*MockPurchaseRepository)(nil).CreatePurchase), ctx, userId, itemId)
 }</span>
 
 // GetUserPurchases mocks base method.
-func (m *MockPurchaseRepository) GetUserPurchases(ctx context.Context, userId uint32) ([]*models.Item, error) <span class="cov0" title="0">{
+func (m *MockPurchaseRepository) GetUserPurchases(ctx context.Context, userId uint32) ([]*models.Item, error) <span class="cov8" title="1">{
         m.ctrl.T.Helper()
         ret := m.ctrl.Call(m, "GetUserPurchases", ctx, userId)
         ret0, _ := ret[0].([]*models.Item)
@@ -2142,7 +2159,7 @@ func (m *MockPurchaseRepository) GetUserPurchases(ctx context.Context, userId ui
 }</span>
 
 // GetUserPurchases indicates an expected call of GetUserPurchases.
-func (mr *MockPurchaseRepositoryMockRecorder) GetUserPurchases(ctx, userId any) *gomock.Call <span class="cov0" title="0">{
+func (mr *MockPurchaseRepositoryMockRecorder) GetUserPurchases(ctx, userId any) *gomock.Call <span class="cov8" title="1">{
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserPurchases", reflect.TypeOf((*MockPurchaseRepository)(nil).GetUserPurchases), ctx, userId)
 }</span>
@@ -2186,7 +2203,7 @@ func (mr *MockPurchaseUseCaseMockRecorder) CreatePurchase(ctx, userId, itemType 
 }</span>
 </pre>
 		
-		<pre class="file" id="file29" style="display: none">package usecase
+		<pre class="file" id="file30" style="display: none">package usecase
 
 import (
         "context"
@@ -2208,7 +2225,7 @@ func NewUserUseCase(
         userRepository user.UserRepository,
         purchaseRepository purchase.PurchaseRepository,
         coinRepository coin.CoinRepository,
-) *UserUseCase <span class="cov0" title="0">{
+) *UserUseCase <span class="cov8" title="1">{
         return &amp;UserUseCase{
                 UserRepository:     userRepository,
                 PurchaseRepository: purchaseRepository,
@@ -2216,57 +2233,57 @@ func NewUserUseCase(
         }
 }</span>
 
-func (u *UserUseCase) CreateUser(ctx context.Context, user *models.AuthRequest) error <span class="cov0" title="0">{
-        if user == nil </span><span class="cov0" title="0">{
+func (u *UserUseCase) CreateUser(ctx context.Context, user *models.AuthRequest) error <span class="cov8" title="1">{
+        if user == nil </span><span class="cov8" title="1">{
                 return &amp;errors.NilPointerError{}
         }</span>
 
-        <span class="cov0" title="0">_, err := u.UserRepository.CreateUser(ctx, user)
+        <span class="cov8" title="1">_, err := u.UserRepository.CreateUser(ctx, user)
         if err != nil </span><span class="cov0" title="0">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">return nil</span>
+        <span class="cov8" title="1">return nil</span>
 }
 
-func (u *UserUseCase) GetInfo(ctx context.Context, userId uint32) (*models.InfoResponse, error) <span class="cov0" title="0">{
+func (u *UserUseCase) GetInfo(ctx context.Context, userId uint32) (*models.InfoResponse, error) <span class="cov8" title="1">{
         currentUser, err := u.UserRepository.GetUserById(ctx, userId)
+        if err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">items, err := u.PurchaseRepository.GetUserPurchases(ctx, userId)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
 
-        <span class="cov0" title="0">items, err := u.PurchaseRepository.GetUserPurchases(ctx, userId)
+        <span class="cov8" title="1">coinOperations, err := u.CoinRepository.GetUserTransmissions(ctx, userId, coin.Received)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
 
-        <span class="cov0" title="0">coinOperations, err := u.CoinRepository.GetUserTransmissions(ctx, userId, coin.Received)
-        if err != nil </span><span class="cov0" title="0">{
-                return nil, err
-        }</span>
-
-        <span class="cov0" title="0">received := make([]*models.ReceivedCoin, len(coinOperations))
+        <span class="cov8" title="1">received := make([]*models.ReceivedCoin, len(coinOperations))
         for i, coinOperation := range coinOperations </span><span class="cov0" title="0">{
                 received[i] = &amp;models.ReceivedCoin{FromUser: coinOperation.FromUser, Amount: coinOperation.Amount}
         }</span>
 
-        <span class="cov0" title="0">coinOperations, err = u.CoinRepository.GetUserTransmissions(ctx, userId, coin.Sent)
+        <span class="cov8" title="1">coinOperations, err = u.CoinRepository.GetUserTransmissions(ctx, userId, coin.Sent)
         if err != nil </span><span class="cov0" title="0">{
                 return nil, err
         }</span>
 
-        <span class="cov0" title="0">sent := make([]*models.SendCoinRequest, len(coinOperations))
-        for i, coinOperation := range coinOperations </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">sent := make([]*models.SendCoinRequest, len(coinOperations))
+        for i, coinOperation := range coinOperations </span><span class="cov8" title="1">{
                 sent[i] = &amp;models.SendCoinRequest{ToUser: coinOperation.ToUser, Amount: coinOperation.Amount}
         }</span>
 
-        <span class="cov0" title="0">history := &amp;models.CoinHistory{Received: received, Sent: sent}
+        <span class="cov8" title="1">history := &amp;models.CoinHistory{Received: received, Sent: sent}
 
         return &amp;models.InfoResponse{Coins: currentUser.Coins, Inventory: items, CoinHistory: history}, nil</span>
 }
 </pre>
 		
-		<pre class="file" id="file30" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+		<pre class="file" id="file31" style="display: none">// Code generated by MockGen. DO NOT EDIT.
 // Source: deps.go
 //
 // Generated by this command:
@@ -2325,7 +2342,7 @@ func (mr *MockUserRepositoryMockRecorder) CreateUser(ctx, request any) *gomock.C
 }</span>
 
 // GetUserById mocks base method.
-func (m *MockUserRepository) GetUserById(ctx context.Context, userId uint32) (*models.User, error) <span class="cov0" title="0">{
+func (m *MockUserRepository) GetUserById(ctx context.Context, userId uint32) (*models.User, error) <span class="cov8" title="1">{
         m.ctrl.T.Helper()
         ret := m.ctrl.Call(m, "GetUserById", ctx, userId)
         ret0, _ := ret[0].(*models.User)
@@ -2334,7 +2351,7 @@ func (m *MockUserRepository) GetUserById(ctx context.Context, userId uint32) (*m
 }</span>
 
 // GetUserById indicates an expected call of GetUserById.
-func (mr *MockUserRepositoryMockRecorder) GetUserById(ctx, userId any) *gomock.Call <span class="cov0" title="0">{
+func (mr *MockUserRepositoryMockRecorder) GetUserById(ctx, userId any) *gomock.Call <span class="cov8" title="1">{
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserById", reflect.TypeOf((*MockUserRepository)(nil).GetUserById), ctx, userId)
 }</span>
@@ -2355,7 +2372,7 @@ func (mr *MockUserRepositoryMockRecorder) GetUserByUsername(ctx, username any) *
 }</span>
 
 // UpdateUserCoins mocks base method.
-func (m *MockUserRepository) UpdateUserCoins(ctx context.Context, userId uint32, coins int32) error <span class="cov0" title="0">{
+func (m *MockUserRepository) UpdateUserCoins(ctx context.Context, userId uint32, coins int32) error <span class="cov8" title="1">{
         m.ctrl.T.Helper()
         ret := m.ctrl.Call(m, "UpdateUserCoins", ctx, userId, coins)
         ret0, _ := ret[0].(error)
@@ -2363,7 +2380,7 @@ func (m *MockUserRepository) UpdateUserCoins(ctx context.Context, userId uint32,
 }</span>
 
 // UpdateUserCoins indicates an expected call of UpdateUserCoins.
-func (mr *MockUserRepositoryMockRecorder) UpdateUserCoins(ctx, userId, coins any) *gomock.Call <span class="cov0" title="0">{
+func (mr *MockUserRepositoryMockRecorder) UpdateUserCoins(ctx, userId, coins any) *gomock.Call <span class="cov8" title="1">{
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateUserCoins", reflect.TypeOf((*MockUserRepository)(nil).UpdateUserCoins), ctx, userId, coins)
 }</span>

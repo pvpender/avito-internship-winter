@@ -2,8 +2,8 @@ package usecase
 
 import (
 	"context"
+	"github.com/pvpender/avito-shop/internal/usecase/common"
 
-	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
 	"github.com/pvpender/avito-shop/internal/errors"
 	"github.com/pvpender/avito-shop/internal/models"
 	"github.com/pvpender/avito-shop/internal/usecase/coin"
@@ -11,13 +11,13 @@ import (
 )
 
 type CoinUseCase struct {
-	trManager *manager.Manager
+	trManager common.TransactionManager
 	coin.CoinRepository
 	user.UserRepository
 }
 
 func NewCoinUseCase(
-	trManager *manager.Manager,
+	trManager common.TransactionManager,
 	userRepository user.UserRepository,
 	coinRepository coin.CoinRepository,
 ) *CoinUseCase {
@@ -59,7 +59,7 @@ func (c *CoinUseCase) SendCoin(ctx context.Context, userId uint32, request *mode
 			return trErr
 		}
 
-		trErr = c.UserRepository.UpdateUserCoins(ctx, receiver.UserId, request.Amount+request.Amount)
+		trErr = c.UserRepository.UpdateUserCoins(ctx, receiver.UserId, receiver.Coins+request.Amount)
 		if trErr != nil {
 			return trErr
 		}
