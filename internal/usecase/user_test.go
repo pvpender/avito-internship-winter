@@ -2,6 +2,8 @@ package usecase
 
 import (
 	"context"
+	"testing"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
 	"github.com/pvpender/avito-shop/internal/errors"
@@ -12,7 +14,6 @@ import (
 	mock_user "github.com/pvpender/avito-shop/internal/usecase/user/mocks"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
-	"testing"
 )
 
 func TestUserUseCase_CreateUser(t *testing.T) {
@@ -93,7 +94,7 @@ func TestUserUseCase_GetInfo(t *testing.T) {
 				p.EXPECT().GetUserPurchases(gomock.Any(), userId).Return(purList, nil)
 
 				var rTr []*models.CoinOperationWithUsernames
-				sTr := []*models.CoinOperationWithUsernames{&models.CoinOperationWithUsernames{FromUser: "Nic", ToUser: "Jo", Amount: 100}}
+				sTr := []*models.CoinOperationWithUsernames{{FromUser: "Nic", ToUser: "Jo", Amount: 100}}
 				c.EXPECT().GetUserTransmissions(gomock.Any(), userId, coin.Received).Return(rTr, nil)
 				c.EXPECT().GetUserTransmissions(gomock.Any(), userId, coin.Sent).Return(sTr, nil)
 			},
@@ -102,7 +103,7 @@ func TestUserUseCase_GetInfo(t *testing.T) {
 				Inventory: make([]*models.Item, 0),
 				CoinHistory: &models.CoinHistory{
 					Received: make([]*models.ReceivedCoin, 0),
-					Sent:     []*models.SendCoinRequest{&models.SendCoinRequest{ToUser: "Jo", Amount: 100}},
+					Sent:     []*models.SendCoinRequest{{ToUser: "Jo", Amount: 100}},
 				},
 			},
 		},
@@ -126,6 +127,7 @@ func TestUserUseCase_GetInfo(t *testing.T) {
 	for _, tc := range testTable {
 		t.Run(tc.name, func(t *testing.T) {
 			ctx := context.WithValue(context.Background(), chi.RouteCtxKey, &chi.Context{})
+
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 

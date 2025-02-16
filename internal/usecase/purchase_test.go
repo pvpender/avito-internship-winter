@@ -2,6 +2,8 @@ package usecase
 
 import (
 	"context"
+	"testing"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
 	"github.com/pvpender/avito-shop/internal/errors"
@@ -12,7 +14,6 @@ import (
 	mock_user "github.com/pvpender/avito-shop/internal/usecase/user/mocks"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
-	"testing"
 )
 
 func TestPurchaseUseCase_CreatePurchase(t *testing.T) {

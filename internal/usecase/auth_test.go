@@ -2,6 +2,10 @@ package usecase
 
 import (
 	"context"
+	"log/slog"
+	"os"
+	"testing"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5"
@@ -12,9 +16,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 	"golang.org/x/crypto/bcrypt"
-	"log/slog"
-	"os"
-	"testing"
 )
 
 func TestAuthUseCase_Authenticate(t *testing.T) {
