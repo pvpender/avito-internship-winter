@@ -23,8 +23,20 @@ make up
 ```
 docker
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
+
+4. Выключить
+
+Make
+```bash
+make down
+```
+docker
+```bash
+docker compose down
+```
+
 
 ## Тестирование
 
