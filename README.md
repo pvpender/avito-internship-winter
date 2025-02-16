@@ -52,6 +52,8 @@ curl -X 'GET' \
 
 Доступно в файлах `cover.html` и `cover.out`
 
+`config_test.yaml` нужен только для интеграционных тестов, которые запускаются с флагом `integration`
+
 ## Нагрузочное тестирование
 
 Проведено с помощью [vegeta](https://github.com/tsenart/vegeta). Результат в файле plot.html и на скрине
