@@ -1,4 +1,4 @@
-# avito-internship-winter
+# Merch Shop
 
 ## Требования
 1. Git
